@@ -1,0 +1,68 @@
+﻿column_name,column_value,label,mco_choice,mco_column_name
+rural_urban,1,Rural,,
+rural_urban,2,Urban,,
+tipo_familia,1,Biparental,,
+tipo_familia,2,Single parent - Mother,,
+tipo_familia,3,Single parent - Father,,
+tipo_familia,4,Reconstituted,,
+tipo_familia,5,Extensive (Integrates other blood relatives),,
+tipo_familia,6,Homoparental (Union of the same sex with children),,
+tipo_familia,7,Couples with a stable relationship but not living together,,
+tipo_familia,8,Childless union,,
+tipo_familia,9,Only one person,,
+tipo_familia,10,Other,,
+family_type_reduced,1,Biparental,,
+family_type_reduced,2,Single parent,,
+family_type_reduced,3,Extensive,,
+family_type_reduced,4,Other,,
+mig_ext_pref_motivo/1,1,Search for a better job,1,mig_ext_pref_motivo
+mig_ext_pref_motivo/2,1,Unemployment,2,mig_ext_pref_motivo
+mig_ext_pref_motivo/3,1,Deterioration of livelihoods due to natural hazards,3,mig_ext_pref_motivo
+mig_ext_pref_motivo/4,1,Direct impact of a natural hazard,4,mig_ext_pref_motivo
+mig_ext_pref_motivo/5,1,Due to loss of land (use change),5,mig_ext_pref_motivo
+mig_ext_pref_motivo/6,1,Lack of money for food,6,mig_ext_pref_motivo
+mig_ext_pref_motivo/7,1,Lack of money for other basic needs,7,mig_ext_pref_motivo
+mig_ext_pref_motivo/8,1,To send remittances,8,mig_ext_pref_motivo
+mig_ext_pref_motivo/9,1,For study,9,mig_ext_pref_motivo
+mig_ext_pref_motivo/10,1,Domestic violence,10,mig_ext_pref_motivo
+mig_ext_pref_motivo/11,1,Unsafety,11,mig_ext_pref_motivo
+mig_ext_pref_motivo/12,1,Family reunification,12,mig_ext_pref_motivo
+mig_ext_pref_motivo/13,1,For cultural reasons or custom,13,mig_ext_pref_motivo
+mig_ext_pref_motivo/14,1,For healthcare,14,mig_ext_pref_motivo
+mig_ext_pref_motivo/15,1,Adventure tourism,15,mig_ext_pref_motivo
+mig_ext_pref_motivo/16,1,Other,16,mig_ext_pref_motivo
+mig_ext_pref_motivo/99,1,Not sure,99,mig_ext_pref_motivo
+mig_int_pref_motivo/1,1,Search for a better job,1,mig_int_pref_motivo
+mig_int_pref_motivo/2,1,Family reunification,2,mig_int_pref_motivo
+mig_int_pref_motivo/3,1,Threats/extortion,3,mig_int_pref_motivo
+mig_int_pref_motivo/4,1,Domestic violence,4,mig_int_pref_motivo
+mig_int_pref_motivo/5,1,To find a larger/more comfortable space for family,5,mig_int_pref_motivo
+mig_int_pref_motivo/6,1,For independence or starting own family,6,mig_int_pref_motivo
+mig_int_pref_motivo/7,1,Better academic opportunities,7,mig_int_pref_motivo
+mig_int_pref_motivo/8,1,Deterioration of livelihoods due to natural hazards,8,mig_int_pref_motivo
+mig_int_pref_motivo/9,1,Direct impact of natural hazard,9,mig_int_pref_motivo
+mig_int_pref_motivo/10,1,Due to loss of land (use change),10,mig_int_pref_motivo
+mig_int_pref_motivo/11,1,Other,11,mig_int_pref_motivo
+mig_int_pref_motivo/99,1,Not sure,99,mig_int_pref_motivo
+mig_motivo_stay/1,1,Family separation,1,mig_motivo_stay
+mig_motivo_stay/2,1,Economic stability,2,mig_motivo_stay
+mig_motivo_stay/3,1,Availability of job opportunities,3,mig_motivo_stay
+mig_motivo_stay/4,1,The place currently living is safe,4,mig_motivo_stay
+mig_motivo_stay/5,1,Rootedness/sense of belonging,5,mig_motivo_stay
+mig_motivo_stay/6,1,Enjoying social status,6,mig_motivo_stay
+mig_motivo_stay/7,1,Availability of good public services,7,mig_motivo_stay
+mig_motivo_stay/8,1,Affordability of good basic needs,8,mig_motivo_stay
+mig_motivo_stay/9,1,Other,9,mig_motivo_stay
+mig_motivo_stay/99,1,Not sure,99,mig_motivo_stay
+mig_ext_finance/1,1,Bank loan,1,mig_ext_finance
+mig_ext_finance/2,1,Mortgaged the house to the bank,2,mig_ext_finance
+mig_ext_finance/3,1,Loan from lender,3,mig_ext_finance
+mig_ext_finance/4,1,Cooperative loan,4,mig_ext_finance
+mig_ext_finance/5,1,Loan from relative/friend abroad,5,mig_ext_finance
+mig_ext_finance/6,1,Gift from relative/friend abroad,6,mig_ext_finance
+mig_ext_finance/7,1,Savings,7,mig_ext_finance
+mig_ext_finance/8,1,Loan from domestic family ,8,mig_ext_finance
+mig_ext_finance/9,1,Post-arriving employment,9,mig_ext_finance
+mig_ext_finance/10,1,Property selling,10,mig_ext_finance
+mig_ext_finance/11,1,Other,11,mig_ext_finance
+mig_ext_finance/99,1,Not sure,99,mig_ext_finance

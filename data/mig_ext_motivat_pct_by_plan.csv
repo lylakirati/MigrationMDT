@@ -1,0 +1,52 @@
+Planning to Move Within 12 Months,motivation_choice,percentage,motivation
+No,1,82.72626931567328,Search for a better job
+Yes,1,83.85093167701864,Search for a better job
+Not sure,1,84.21052631578947,Search for a better job
+No,2,29.415011037527595,Unemployment
+Yes,2,38.81987577639752,Unemployment
+Not sure,2,10.526315789473683,Unemployment
+No,3,3.9183222958057393,Deterioration of livelihoods due to natural hazards
+Yes,3,3.4161490683229814,Deterioration of livelihoods due to natural hazards
+Not sure,3,15.789473684210526,Deterioration of livelihoods due to natural hazards
+No,4,1.6556291390728477,By the direct impact of a natural hazard
+Yes,4,2.484472049689441,By the direct impact of a natural hazard
+Not sure,4,5.263157894736842,By the direct impact of a natural hazard
+No,5,0.33112582781456956,Due to loss of land (use change)
+Yes,5,0.9316770186335404,Due to loss of land (use change)
+Not sure,5,0.0,Due to loss of land (use change)
+No,6,16.99779249448124,Lack of money for food
+Yes,6,18.32298136645963,Lack of money for food
+Not sure,6,15.789473684210526,Lack of money for food
+No,7,24.00662251655629,Lack of money for other basic needs
+Yes,7,27.32919254658385,Lack of money for other basic needs
+Not sure,7,15.789473684210526,Lack of money for other basic needs
+No,8,17.93598233995585,To send remittances
+Yes,8,18.32298136645963,To send remittances
+Not sure,8,5.263157894736842,To send remittances
+No,9,2.980132450331126,For study
+Yes,9,2.1739130434782608,For study
+Not sure,9,5.263157894736842,For study
+No,10,0.11037527593818984,Domestic violence
+Yes,10,0.6211180124223602,Domestic violence
+Not sure,10,5.263157894736842,Domestic violence
+No,11,4.194260485651214,Unsafety
+Yes,11,6.832298136645963,Unsafety
+Not sure,11,5.263157894736842,Unsafety
+No,12,5.960264900662252,Family reunification
+Yes,12,7.453416149068323,Family reunification
+Not sure,12,5.263157894736842,Family reunification
+No,13,1.490066225165563,For cultural reasons or custom
+Yes,13,0.9316770186335404,For cultural reasons or custom
+Not sure,13,0.0,For cultural reasons or custom
+No,14,1.434878587196468,For healthcare
+Yes,14,0.3105590062111801,For healthcare
+Not sure,14,0.0,For healthcare
+No,15,7.72626931567329,Adventure Tourism
+Yes,15,4.968944099378882,Adventure Tourism
+Not sure,15,5.263157894736842,Adventure Tourism
+No,16,3.0353200883002205,Other
+Yes,16,3.4161490683229814,Other
+Not sure,16,5.263157894736842,Other
+No,99,0.05518763796909492,Not sure
+Yes,99,0.0,Not sure
+Not sure,99,0.0,Not sure
