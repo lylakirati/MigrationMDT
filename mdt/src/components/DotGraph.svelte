@@ -1,10 +1,11 @@
 <script>
-	import { scaleLinear } from 'd3-scale';
+	import { scaleLinear, scaleOrdinal } from 'd3-scale';
 	import * as d3 from 'd3';
 
 	import { onMount } from 'svelte';
 
 	let data = [];
+    let data2 = []; // all people who want to migrate
 
 	let doesNotWantMigrateCounter = 0;
 	let wantsMigrateCounter = 0;
@@ -25,7 +26,8 @@
 				wantsMigrateCounter += 1;
 			}
 		}
-		console.log(doesNotWantMigrateCounter, wantsMigrateCounter);
+
+        data2 = data.filter((d) => d['mig_ext_intention'] === 1); 
 	});
 
 	// set general use variables
@@ -49,6 +51,9 @@
 	$: yScale = scaleLinear()
 		.domain([0, (data.length - (data.length % dotsPerRow)) / dotsPerRow])
 		.range([paddings.bottom, chartHeight - paddings.top]);
+    $: colorScale = scaleOrdinal()
+		.domain([0, 1])
+		.range(['#000', '#65BABD']);
 
 	$: xScale2 = scaleLinear()
 		.domain([0, 25])
@@ -64,58 +69,94 @@
 			d3.select('svg')
 				.selectAll('circle')
 				.data(data)
-				.join('circle')
 				.transition()
 				.duration(250)
 				.ease(d3.easeLinear)
 				.attr('cx', (d) =>
 					d['mig_ext_intention'] === 1 ? xScale2(d['ind-2'] % 25) : xScale3(d['ind-2'] % 25)
 				)
-				.attr('cy', (d) => yScale((d['ind-2'] - (d['ind-2'] % 25)) / 25));
+				.attr('cy', (d) => yScale((d['ind-2'] - (d['ind-2'] % 25)) / 25))
+                .attr('fill', (d) => colorScale(d['mig_ext_intention']));
 			state = 1;
 		} else if (state === 1) {
-			d3.select('svg')
+            d3.select('svg')
 				.selectAll('circle')
-				.data(data.filter((d) => d['mig_ext_intention'] === 1))
-				.join('circle')
-				.join(
-					function (enter) {
-						return enter.append('circle');
-					},
-					function (update) {
-						return update;
-					},
-					function (exit) {
-						return exit.transition().attr('cy', 500).remove();
-					}
-				)
-				.transition()
-				// .duration(250)
-				// .ease(d3.easeLinear)
-				// .attr('cx', (d, i) => xScale(i % dotsPerRow))
-				// .attr('cy', (d, i) => yScale((i - (i % dotsPerRow)) / dotsPerRow));
+				.filter(d => d['mig_ext_intention'] !== 1)
+                .transition()
+                .duration(750)
+                .ease(d3.easeLinear)
+                .attr('opacity', 0)
+                .remove();
+            
+            // const newData = d3.select('svg').selectAll('circle').data(data2);
+            // newData.attr('cx', (d, i) => xScale(i % dotsPerRow))
+			// 	.attr('cy', (d, i) => yScale((i - (i % dotsPerRow)) / dotsPerRow))
+
 			state = 2;
 		} else if (state === 2) {
+            const newData = d3.select('svg').selectAll('circle').data(data);
 			d3.select('svg')
 				.selectAll('circle')
 				.data(data)
-				.join('circle')
+                .join(
+                    enter => enter.append('circle').attr('r', 3),
+                    exit => exit.remove()
+                ).merge(newData)
 				.transition()
 				.duration(250)
 				.ease(d3.easeLinear)
 				.attr('cx', (d, i) => xScale(i % dotsPerRow))
-				.attr('cy', (d, i) => yScale((i - (i % dotsPerRow)) / dotsPerRow));
+				.attr('cy', (d, i) => yScale((i - (i % dotsPerRow)) / dotsPerRow))
+                .attr('fill', (d) => colorScale(d['mig_ext_intention']))
+                .attr('opacity', 1);
 			state = 0;
 		}
 		toggle = !toggle; // to allow toggling back
 	}
+
+    // hover effect
+  const idContainer = "svg-container-" + Math.random() * 1000000;
+  let mousePosition = { x: null, y: null };
+  let pageMousePosition = { x: null, y: null };
+  let currentHoveredPoint = null;
+
+  function followMouse(event) {
+    const svg = document.getElementById(idContainer);
+    if (svg === null) return;
+    const dim = svg.getBoundingClientRect();
+    pageMousePosition = {
+      x: event.pageX,
+      y: event.pageY,
+    };
+    const positionInSVG = {
+      x: event.clientX - dim.left,
+      y: event.clientY - dim.top,
+    };
+    mousePosition =
+      positionInSVG.x > paddings.left &&
+      positionInSVG.x < chartWidth - paddings.right &&
+      positionInSVG.y > paddings.top &&
+      positionInSVG.y < chartHeight - paddings.bottom
+        ? { x: positionInSVG.x, y: positionInSVG.y }
+        : { x: null, y: null };
+    computeSelectedXYValue(mousePosition.x, mousePosition.y);
+  }
+  function removePointer() {
+    mousePosition = { x: null, y: null };
+  }
+    function computeSelectedXYValue(xVal, yVal) {
+        currentHoveredPoint =
+            data.filter((d, i) => xScale(i % dotsPerRow) >= xVal && yScale((i - i % dotsPerRow)/dotsPerRow) >= yVal)[0];
+        console.log(xVal, yVal, currentHoveredPoint);
+        return null;
+    }
 </script>
 
 <main>
 	<label>
 		<button on:click={() => transition()}> Current State: {state} </button>
 	</label>
-	{#if state === 0}
+	{#if state === 1}
 		<h2>Sorted Migration</h2>
 	{:else}
 		<h2>Unsorted Migration</h2>
@@ -128,7 +169,9 @@
 			</div>
 		{/if}
 		{#if data.length > 1}
-			<svg width={chartWidth} height={chartHeight}>
+			<svg width={chartWidth} height={chartHeight} on:mousemove={followMouse}
+            on:mouseleave={removePointer}
+            id={idContainer}>
 				<g>
 					{#each data as d, i}
 						{#if i != data.length - 1}
@@ -137,13 +180,13 @@
 								cy={yScale((i - (i % 50)) / 50)}
 								id={`dot-${i}`}
 								r={3}
-								fill={+d['mig_ext_intention'] === 0 ? '#65BABD' : '#000'}
+								fill={colorScale(+d['mig_ext_intention'])}
 							/>
 						{/if}
 					{/each}
 				</g>
 			</svg>
-			<!-- <div
+			<div
                 class={mousePosition.x === null
                     ? "tooltip-hidden"
                     : "tooltip-visible"}
@@ -151,9 +194,9 @@
                     10}px; top: {pageMousePosition.y + 10}px"
             >
                 {#if mousePosition.x !== null}
-                    At index {currentHoveredPoint.index}, the size was {currentHoveredPoint.size}.
+                    Migration Motives: {currentHoveredPoint['mig_ext_pref_motivo']}.
                 {/if}
-            </div> -->
+            </div>
 		{:else}
 			<p>Loading</p>
 		{/if}
@@ -185,4 +228,24 @@
 		justify-content: center;
 		gap: 50px;
 	}
+
+        /* dynamic classes for the tooltip */
+  .tooltip-hidden {
+    visibility: hidden;
+    font-family: "Nunito", sans-serif;
+    width: 200px;
+    position: absolute;
+  }
+
+  .tooltip-visible {
+    font: 25px sans-serif;
+    font-family: "Nunito", sans-serif;
+    visibility: visible;
+    background-color: #f0dba8;
+    border-radius: 10px;
+    width: 200px;
+    color: black;
+    position: absolute;
+    padding: 10px;
+  }
 </style>
