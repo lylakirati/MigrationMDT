@@ -1,4 +1,4 @@
-{
+export let remitExp = {
     "name": "remittance receivers' spendings",
     "children": [
         {
