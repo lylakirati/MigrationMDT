@@ -3,7 +3,7 @@ export let remitExp = {
     "children": [
         {
             "name": "Food",
-            "color": "#f58321",
+            "color": "#8ED49A",
             "children": [
                 {"name": "Food", "weight": 33.77261937},
                 {"name": "Drinking Water", "weight": 1.8707116}
@@ -11,7 +11,7 @@ export let remitExp = {
         },
         {
             "name": "Utilities",
-            "color": "#ef1621",
+            "color": "#B9E1FF", 
             "children": [
                 {"name": "Water", "weight": 1.807094476},
                 {"name": "Electric", "weight": 6.005436596},
@@ -21,7 +21,7 @@ export let remitExp = {
         },
         {
             "name": "Housing",
-            "color": "#77bc45",
+            "color": "#6297D5",
             "children": [
                 {"name": "Rent", "weight": 2.425311588},
                 {"name": "Household Products", "weight": 6.508187196},
@@ -30,14 +30,14 @@ export let remitExp = {
         },
         {
             "name": "Transportation",
-            "color": "#4aaaea",
+            "color": "#F8CE6D",
             "children": [
                 {"name": "Transportation", "weight": 5.385041317}
             ]
         },
         {
             "name": "Personal Spending",
-            "color": "#00acad",
+            "color": "#EFA051",
             "children": [
                 {"name": "Other", "weight": 0.726714733},
                 {"name": "Clothing", "weight": 1.555179483},
@@ -46,21 +46,21 @@ export let remitExp = {
         },
         {
             "name": "Healthcare",
-            "color": "#f575a3",
+            "color": "#DDB6FC",
             "children": [
                 {"name": "Healthcare", "weight": 9.875063093}
             ]
         },
         {
             "name": "Education",
-            "color": "#592c94",
+            "color": "#1C52A3",
             "children": [
                 {"name": "Education", "weight": 1.303142478}
             ]
         },
         {
             "name": "Savings & Debt",
-            "color": "#00acad",
+            "color": "#4FAA5F",
             "children": [
                 {"name": "Debt", "weight": 6.326009938},
                 {"name": "Savings", "weight": 2.358058354}
@@ -68,7 +68,7 @@ export let remitExp = {
         },
         {
             "name": "Productive Supplies",
-            "color": "#fcba03",
+            "color": "#9C6BDB",
             "children": [
                 {"name": "Productive Supplies", "weight": 2.7159658}
             ]
