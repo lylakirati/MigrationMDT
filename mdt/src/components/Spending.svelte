@@ -1,11 +1,13 @@
 <script>
     import * as d3 from 'd3';    
     import { voronoiTreemap } from 'd3-voronoi-treemap';
-    import { gdp } from "../data/globalEconomyByGDP.json.js";
+    // import { gdp } from "../data/globalEconomyByGDP.json.js";
     import { remitExp } from "../data/avgSpendingForRemit.json.js";
+    import { polygonScaleArea } from 'geometric';    
 
     //begin: constants
     const _2PI = 2 * Math.PI;
+    // const geometric = require("geometric"); // for rescale polygon
     //end: constants
     
     //begin: layout conf.
@@ -36,54 +38,6 @@
         .clamp(true);
     //end: drawing conf.
 
-
-    // async function populate() {
-    //     await d3.json("../data/globalEconomyByGDP.json")
-    //         .then(function(rootData) {
-    //         initData();
-    //         initLayout(rootData);
-    //         hierarchy = d3.hierarchy(rootData).sum(function(d){ return d.weight; });
-    //         _voronoiTreemap
-    //             .clip(circlingPolygon)
-    //             (hierarchy);
-            
-    //         drawTreemap(hierarchy);
-    //     }
-    // }
-    
-    // fetch("../data/globalEconomyByGDP.json")
-    
-    // $: { d3.json("../data/globalEconomyByGDP.json")
-    //     .then(function(rootData) {
-    //         initData();
-    //         initLayout(rootData);
-    //         hierarchy = d3.hierarchy(rootData).sum(function(d){ return d.weight; });
-    //         _voronoiTreemap
-    //             .clip(circlingPolygon)
-    //             (hierarchy);
-            
-    //         drawTreemap(hierarchy);
-    //     });
-    // }
-
-    // let data = [];
-    // onMount(async () => {
-	// 	data = await d3.json("../data/globalEconomyByGDP.json");
-    // populate();
-
-	// gdp.filter((rootData) => function(rootData) {
-    //         initData();
-    //         initLayout(rootData);
-    //         hierarchy = d3.hierarchy(rootData).sum(function(d){ return d.weight; });
-    //         _voronoiTreemap
-    //             .clip(circlingPolygon)
-    //             (hierarchy);
-            
-    //         drawTreemap(hierarchy);
-    // });
-
-    // initData();
-
     function computeCirclingPolygon(radius) {
         var points = 60,
             increment = _2PI/points,
@@ -103,15 +57,87 @@
     let interLegend = 4;
     let colorWidth = legendHeight * 6;
     let continents = remitExp.children.reverse();
+
     hierarchy = d3.hierarchy(remitExp).sum(function(d){ return d.weight; });
     _voronoiTreemap.clip(circlingPolygon)(hierarchy);
-    var leaves = hierarchy.leaves();
+    var leaves 
+    leaves = hierarchy.leaves();
    
+    let showNoRemitStatus = 0;
+    function showNoRemit() {
+        // let something;
+        if (showNoRemitStatus === 0) {
+            d3.selectAll('.cell-remit')
+                .data(leaves)
+                .transition()
+                .duration(500)
+				.ease(d3.easeLinear)
+                .attr("d", function(d) { 
+                    return "M"+ polygonScaleArea(d.polygon, d.data.noRemitRatio).join(",")+"z"; 
+                });
+
+            d3.selectAll(".value")
+                .data(leaves)
+                .transition()
+                .duration(500)
+                .textTween(
+                    (d) => (t) => {
+                        const index = d3.interpolateNumber(d.data.remitAmount, d.data.noRemitAmount)(t).toFixed(2);           
+                        return `$${index}`;
+                    }
+                )
+                .end();
+                
+            d3.select(".button")
+                .style("background-color", "#264561")
+            showNoRemitStatus = 1;
+        } else {
+            d3.selectAll('.cell-remit')
+                .data(leaves)
+                .transition()
+                .duration(500)
+				.ease(d3.easeLinear)
+                .attr("d", function(d) { 
+                    return "M"+ d.polygon.join(",")+"z"; 
+                });
+
+            d3.select(".button")
+                .style("background-color", "#7A8B9A");
+
+            d3.selectAll(".value")
+                .data(leaves)
+                .transition()
+                .duration(500)
+                .textTween(
+                    (d) => (t) => {
+                        const index = d3.interpolateNumber(d.data.noRemitAmount, d.data.remitAmount)(t).toFixed(2);           
+                        return `$${index}`;
+                    }
+                )
+                .end();
+
+
+    
+            showNoRemitStatus = 0;
+        }
+        
+
+    };
 
 </script>
 
 
 <main>
+    <label>
+        <button
+            class = "button"
+            aria-label = "Show no remit"
+            on:click={() => showNoRemit()}
+        >
+            Show no remit
+        </button>
+    </label>
+    
     <svg 
         width={svgWidth} 
         height={svgHeight}
@@ -135,7 +161,14 @@
                 >
                     {#each leaves as country}
                         <path 
-                            class = "cell"
+                            class = "cell cell-remit-background"
+                            d = "M{country.polygon.join(",")}Z"
+                            fill = {country.parent.data.color}
+                            fill-opacity = 0.2
+                            visibility="visible"
+                        />
+                        <path 
+                            class = "cell cell-remit"
                             d = "M{country.polygon.join(",")}Z"
                             fill = {country.parent.data.color}
                         />
@@ -149,19 +182,24 @@
                     {#each leaves as country}
                         <g
                             class = "label"
-                            tranform = "translate({country.polygon.site.x}, {country.polygon.site.y})"
                             font-size = {fontScale(country.data.weight)}
                         >
-                        <!-- TODO: (d.data.weight<1)? d.data.code : d.data.name; -->
-                            <text class = "name">
-                                {(country.data.weight<1)? country.data.code : country.data.name}
+                            <text 
+                                class = "name" 
+                                x = "{country.polygon.site.x}" 
+                                y = "{country.polygon.site.y}"
+                            >
+                                {country.data.name}
                             </text>
-                            <text class = "value">
-                                {country.data.weight + "%"}
+                            <text class = "value"
+                                x = "{country.polygon.site.x}" 
+                                y = "{country.polygon.site.y}"
+                            >
+                                ${country.data.remitAmount.toFixed(2)}
                             </text>
                         </g>
                     {/each}
-                </g>  
+                </g>
 
                 <g
                     class = "hoverers"
@@ -188,7 +226,7 @@
             transform = "translate({halfWidth}, {titleY})"
             text-anchor = "middle"
         >
-            Expenditures of Households Receiving Remittances
+            Household Expenditures by Categories
         </text>
 
         <text 
@@ -234,7 +272,8 @@
                         />
                         <text
                             class = "tiny"
-                            transform = "translate({colorWidth + 5}, -2})"
+                            x = "{colorWidth + 5}"
+                            y = -2
                         >
                             {continent.name}
                         </text>
@@ -274,30 +313,30 @@
     .world {
         stroke: lightgrey;
         stroke-width: 4px;
+        fill: white;
     }
 
     .cell {
         stroke: white;
         stroke-width: 1px;
-    }
-
-    .legend-color {
-        stroke-width: 1px;
-        stroke:darkgrey;
-    }
+      }
 
     .label {
         text-anchor: middle;
         /* fill: white; */
         color: black;
+        
+        /* position: relative; */
     }
     
     .label>.name {
         dominant-baseline: text-after-edge;
+       
     }
     
     .label>.value {
         dominant-baseline: text-before-edge;
+        top:1;
     }
 
     .hoverer {
@@ -308,6 +347,22 @@
     
     .hoverer:hover {
         stroke-width: 3px;
+    }
+
+    .legend-color {
+        stroke-width: 1px;
+        stroke:darkgrey;
+    }
+
+    .button {
+        background-color: #7A8B9A;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
     }
     
 
