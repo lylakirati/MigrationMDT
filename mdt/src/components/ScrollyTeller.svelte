@@ -1,6 +1,7 @@
 <script>
     import Scroller from "@sveltejs/svelte-scroller";
     import DotGraph from './DotGraph.svelte';
+    import Spending from './Spending.svelte';
 
     let count, index, offset, progress;
     let width, height;
@@ -42,7 +43,11 @@
         </section>
         <section>This is the second section.</section>
         <section>This is the third section.</section>
-        <section>This is the fourth section.</section>
+        <section>
+            This is the fourth section.
+            
+            <Spending />
+        </section>
         <section>This is the fifth section.</section>
         <section>This is the sixth section.</section>
     </div>
