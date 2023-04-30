@@ -9,8 +9,13 @@
 
 	let doesNotWantMigrateCounter = 0;
 	let wantsMigrateCounter = 0;
+	
+	// set general use variables
+	let chartWidth = 800;
+	let chartHeight = 1000;
 
 	onMount(async () => {
+
 		data = await d3.csv('../../src/data/main_cleaned.csv');
 
 		data = data.filter((d) => +d['mig_ext_intention'] !== 99);
@@ -30,9 +35,7 @@
         data2 = data.filter((d) => d['mig_ext_intention'] === 1); 
 	});
 
-	// set general use variables
-	let chartWidth = 720;
-	let chartHeight = 1800;
+
 
 	const paddings = {
 		top: 25,
@@ -42,7 +45,7 @@
 	};
 	const padding_between = 10;
 
-	const dotsPerRow = 50;
+	const dotsPerRow = 100;
 
 	// set scaling variables
 	$: xScale = scaleLinear()
@@ -73,9 +76,9 @@
 				.duration(250)
 				.ease(d3.easeLinear)
 				.attr('cx', (d) =>
-					d['mig_ext_intention'] === 1 ? xScale2(d['ind-2'] % 25) : xScale3(d['ind-2'] % 25)
+					d['mig_ext_intention'] === 1 ? xScale2(d['ind-2'] % (dotsPerRow/2)) : xScale3(d['ind-2'] % (dotsPerRow/2))
 				)
-				.attr('cy', (d) => yScale((d['ind-2'] - (d['ind-2'] % 25)) / 25))
+				.attr('cy', (d) => yScale((d['ind-2'] - (d['ind-2'] % (dotsPerRow/2))) / (dotsPerRow/2)))
                 .attr('fill', (d) => colorScale(d['mig_ext_intention']));
 			state = 1;
 		} else if (state === 1) {
@@ -152,7 +155,8 @@
     }
 </script>
 
-<main>
+<section>
+	{#if data.length > 1}
 	<label>
 		<button on:click={() => transition()}> Current State: {state} </button>
 	</label>
@@ -168,7 +172,6 @@
 				<div>Don't Want To Migrate (Externally)</div>
 			</div>
 		{/if}
-		{#if data.length > 1}
 			<svg width={chartWidth} height={chartHeight} on:mousemove={followMouse}
             on:mouseleave={removePointer}
             id={idContainer}>
@@ -176,8 +179,8 @@
 					{#each data as d, i}
 						{#if i != data.length - 1}
 							<circle
-								cx={xScale(i % 50)}
-								cy={yScale((i - (i % 50)) / 50)}
+								cx={xScale(i % dotsPerRow)}
+								cy={yScale((i - (i % dotsPerRow)) / dotsPerRow)}
 								id={`dot-${i}`}
 								r={3}
 								fill={colorScale(+d['mig_ext_intention'])}
@@ -197,22 +200,13 @@
                     Migration Motives: {currentHoveredPoint['mig_ext_pref_motivo']}.
                 {/if}
             </div>
-		{:else}
+	</div>
+	{:else}
 			<p>Loading</p>
 		{/if}
-	</div>
-</main>
+</section>
 
 <style>
-	main {
-		text-align: center;
-		font-family: 'Nunito', sans-serif;
-		font-weight: 300;
-		line-height: 1;
-		/* font-size: 12px; */
-		color: var(--color-text);
-		margin-top: 100px;
-	}
 
 	@keyframes draw {
 		from {

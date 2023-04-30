@@ -196,15 +196,6 @@
 		color: var(--color-text);
 		margin-top: 100px;
 	}
-
-	@keyframes draw {
-		from {
-			stroke-dashoffset: 4400;
-		}
-		to {
-			stroke-dashoffset: 0;
-		}
-	}
 	.headers {
 		display: flex;
 		flex-direction: row;
