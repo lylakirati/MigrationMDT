@@ -9,9 +9,16 @@
 </script>
 
 <section id="title">
-    <h1>What do Central Americans run away from?</h1>
-    <p>(Draft 0.01)</p>
+    <h1>What do Central Americans run away from?</h1> 
     <p class='authors'>Grace Huang, Lyla Kiratiwudhikul, Nerine Uyanik</p>
+    <p>(Draft 0.01)</p>
+    <p>
+        As a note to reviewers/current viewers, since this is an MVP, there are still things that haven't been finalized yet.
+        Particularly, the writing has not been completed yet and we have not finished implementing responsive generation of monetary 
+        data for the final visualization. However, what's currently there should hopefully provide an idea of what our final 
+        product will look like. We plan to build upon both of these items for the final version,
+        as well as fixing up styling to make things more cohesive.
+    </p>
 </section>
 <main>
     <section id="intro">
