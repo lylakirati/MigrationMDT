@@ -11,7 +11,30 @@
 		lackMoneyNeeds: [],
 		remittances:[],
 		lackMoneyFood: [],
+		adventureTourism: [],
 	};
+
+	let motivationResponses = {
+		1: "betterJob",
+		2: "unemployment",
+		6: "lackMoneyFood",
+		7: "lackMoneyNeeds",
+		8: "remittances",
+		15: "adventureTourism",
+	};
+
+	let dataWithCategories = []
+
+	let order = ["1", "2", "6", "7", "8", "15"]; // to make a 3 x 2 grid
+
+	let categoryNames = {
+		1: "Better Job/Salary",
+		2: "Unemployment",
+		6: "Money for Food",
+		7: "Money for Other Basic Needs",
+		8: "Remittances",
+		15: "Tourism"
+	}
 
 	let doesNotWantMigrateCounter = 0;
 	let wantsMigrateCounter = 0;
@@ -25,7 +48,7 @@
 
 
 	const paddings = {
-		top: 10,
+		top: 25,
 		left: 25,
 		right: 25,
 		bottom: 50
@@ -53,9 +76,16 @@
 		.domain([0, dotsPerRow/2])
 		.range([chartWidth / 2 + padding_between, chartWidth - paddings.right]);
 
+	let columnWidth = (chartWidth - paddings.left - paddings.right - 2 * padding_between)/3;
+	let categoryDotsPerRow = 36;
 	$: xScale4 = scaleLinear() // divide into 3 columns, for different categories
-		.domain([0, dotsPerRow/3])
-		.range([0, (chartWidth - paddings.left - paddings.right - 2 * padding_between)/3])
+		.domain([0, categoryDotsPerRow])
+		.range([0,columnWidth])
+	$: colorScaleCategories = scaleOrdinal()
+		.domain(order)
+		.range([' #4FAA5F', '#1C52A3', '#6297D5', '#824936', '#B990EC', '#F8CE6D']);
+
+
 
 	function yScale(index, rowLength) {
 		// hard code for now so that we can have fixed distance between dots
@@ -65,11 +95,18 @@
 	}
 
 	function xScaleCategories(index, category) {
-		
+		let placement = order.indexOf(category); // where it should be placed
+		let col = placement % 3;
+		let unadjustedX = xScale4(index % (categoryDotsPerRow));
+		return unadjustedX + paddings.left + columnWidth*col + padding_between * (col - 1);
 	}
 
 	function yScaleCategories(index, category) {
 		// place first 3 on first row, second 3 on second row
+		let placement = order.indexOf(category); // where it should be placed
+		let row = (placement - placement % 3)/3;
+		let offset = 300;  // arbitrary offset, find a better way to calculate this
+		return yScale(index, categoryDotsPerRow) + row * offset;
 	}
 
 	// TODO: implement this, then move this to case 2
@@ -132,6 +169,19 @@
 					.attr("cx", (d, i) => xScale(i % dotsPerRow))
             		.attr("cy", (d, i) => yScale(i, dotsPerRow))
 					.attr("fill", (d) => colorScale(d['mig_ext_intention']))
+				break;
+			case 3: // fourth case: Separate into different categories based on migration motivation
+				svg
+					.selectAll('circle')
+					.data(dataWithCategories)
+					.join('circle')
+					.transition()
+					.duration(250)
+					.ease(d3.easeLinear)
+					.attr("cx", (d, i) => xScaleCategories(d.categoryIndex, d.category))
+            		.attr("cy", (d, i) => yScaleCategories(d.categoryIndex, d.category))
+					.attr("fill", (d) => colorScaleCategories(d.category))
+				break;
 			default:
 				break;
 		}
@@ -142,6 +192,7 @@
 	onMount(async () => {
 
 		data = await d3.csv('../../src/data/main_cleaned.csv');
+
 
 		data = data.filter((d) => +d['mig_ext_intention'] !== 99);
 		for (let d of data) {
@@ -154,9 +205,19 @@
 				// set the second index position to the migrating counter
 				d['ind-2'] = wantsMigrateCounter;
 				wantsMigrateCounter += 1;
+				let motivations = d['mig_ext_pref_motivo'].split(" ");
+				for (let motivation of Object.keys(motivationResponses))
+				{
+					if(motivations.includes(motivation)){
+						let curArray = dataByMotivation[motivationResponses[motivation]];
+						// todo: refactor to make this more efficient
+						dataWithCategories.push({category: motivation, data: d, categoryIndex: curArray.length})
+						curArray.push(d); // add to relevant data points
+					}
+					
+				}
 			}
 		}
-		state = 1;
 		state = 0;
 		transition();
 		// TODO: populate dataByMotivation to look at the top 5 reasons for migrating
@@ -201,12 +262,14 @@
 </script>
 
 <section>
-	<div>Current State: {state}</div>
-	{#if state === 1}
+	<!-- <div>Current State: {state}</div> -->
+	<!-- {#if state === 1}
 		<h2>Sorted Migration</h2>
+	{:else if state === 2}
+		<h2>All People Who Want To Migrate</h2>
 	{:else}
 		<h2>Unsorted Migration</h2>
-	{/if}
+	{/if} -->
 	<div class="visualization">
 		{#if state === 1}
 			<div class="headers">
@@ -227,6 +290,18 @@
 						/>
 					{/if}
 				{/each} -->
+				{#if state === 3}
+					<g>
+						{#each order as category, i}
+							<text 
+								x={columnWidth * (2 *(i % 3) + 1)/2 + paddings.left + padding_between * (i % 3 - 1)}
+								y={((i - i %3)/3) * 300 + 15}
+								text-anchor={'middle'}>
+								{categoryNames[category]}
+							</text>
+						{/each}
+					</g>
+				{/if}
 			</svg>
 			<!-- <div
                 class={mousePosition.x === null

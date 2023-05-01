@@ -92,18 +92,22 @@
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                Blurb here
+                Seeing as how many of the people surveyed indicated that their income is insufficient, 
+                migrating to another country can allow people to gain more resources to help aid their families.
             </p>
         </div>
         <div class="step" data-step="2">
-            <p>STEP 6</p>
+            <p>
+                While the amount of remittances that households receive vary by country and by situation, having 
+                remittances from abroad as an additional source of income can play a large role in supporting households.
+            </p>
         </div>
-        <div class="step" data-step="3">
+        <!-- <div class="step" data-step="3">
             <p>STEP 3</p>
         </div>
         <div class="step" data-step="4">
             <p>STEP 4</p>
-        </div>
+        </div> -->
     </article>
 </section>
 
@@ -117,7 +121,7 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        background-color: #f3f3f3;
+        /* background-color: #f3f3f3; */
         padding: 1rem;
     }
 
@@ -147,7 +151,7 @@
         -webkit-transform: translate3d(0, 0, 0);
         -moz-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
-        background-color: #8a8a8a;
+        /* background-color: #8a8a8a; */
         z-index: 0;
     }
 
@@ -165,13 +169,13 @@
         transform: translate(-50%, -50%);
         font-size: 8rem;
         font-weight: 900;
-        color: #fff;
+        /* color: #fff; */
     }
 
     .step {
         text-align:left;
         margin: 0 auto 2rem auto;
-        border: 1px solid black;
+        border-left: 2px solid var(--primary-color);
     }
 
     .step:last-child {

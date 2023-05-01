@@ -4,11 +4,13 @@
     import Budget from '../components/Budget.svelte';
 	import DotGraph from '../components/DotGraph.svelte';
 	import RemitScrolling from '../components/RemitScrolling.svelte';
+	import Footer from '../components/Footer.svelte';
     // import Spending from '../components/Spending.svelte';
 </script>
 
 <section id="title">
     <h1>What do Central Americans run away from?</h1>
+    <p>(Draft 0.01)</p>
     <p class='authors'>Grace Huang, Lyla Kiratiwudhikul, Nerine Uyanik</p>
 </section>
 <main>
@@ -38,6 +40,7 @@
         <Budget/>
     </section>
 </main>
+<Footer/>
 
 <!-- <h1>Welcome to SvelteKit</h1>
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p> -->
@@ -97,6 +100,29 @@
     
     .authors {
         opacity:.85;
+    }
+
+    :global(.step){
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        text-align:left;
+        margin: 0 auto 2rem auto;
+        border-left: 2px solid var(--primary-color);
+    }
+
+
+    :global(.step:last-child) {
+        margin-bottom: 0;
+    }
+
+    /* :global(.step.is-active ){
+        background-color: goldenrod;
+        color: #3b3b3b;
+    } */
+
+    :global(.step p) {
+        padding: 1rem;
     }
 
 </style>

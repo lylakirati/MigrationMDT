@@ -1,0 +1,58 @@
+[debug] [2023-05-01T05:18:47.053Z] ----------------------------------------------------------------------
+[debug] [2023-05-01T05:18:47.055Z] Command:       /usr/local/bin/node /usr/local/bin/firebase init hosting
+[debug] [2023-05-01T05:18:47.055Z] CLI Version:   11.29.1
+[debug] [2023-05-01T05:18:47.055Z] Platform:      darwin
+[debug] [2023-05-01T05:18:47.056Z] Node Version:  v18.13.0
+[debug] [2023-05-01T05:18:47.056Z] Time:          Mon May 01 2023 01:18:47 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-05-01T05:18:47.056Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-05-01T05:18:47.063Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-05-01T05:18:47.063Z] > authorizing via signed-in user (gracefh@mit.edu)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/20gracehuang/Downloads/Documents/MIT Files/2023-spring-classes/6.C85/MigrationMDT/mdt
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[info] i  If you want to create a project in a Google Cloud organization or folder, please use "firebase projects:create" instead, and return to this command when you've created the project. 
+[debug] [2023-05-01T05:18:59.691Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects [none]
+[debug] [2023-05-01T05:18:59.691Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"projectId":"migrationmdt","name":"migrationmdt"}
+[debug] [2023-05-01T05:19:00.123Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects 200
+[debug] [2023-05-01T05:19:00.123Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects {"name":"operations/cp.5118882429105778243"}
+[debug] [2023-05-01T05:19:00.125Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 [none]
+[debug] [2023-05-01T05:19:00.480Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 200
+[debug] [2023-05-01T05:19:00.480Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 {"name":"operations/cp.5118882429105778243"}
+[debug] [2023-05-01T05:19:00.981Z] [Project Creation Poller] Retrying task index 0
+[debug] [2023-05-01T05:19:00.982Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 [none]
+[debug] [2023-05-01T05:19:01.375Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 200
+[debug] [2023-05-01T05:19:01.376Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 {"name":"operations/cp.5118882429105778243"}
+[debug] [2023-05-01T05:19:02.376Z] [Project Creation Poller] Retrying task index 0
+[debug] [2023-05-01T05:19:02.376Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 [none]
+[debug] [2023-05-01T05:19:02.827Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 200
+[debug] [2023-05-01T05:19:02.827Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 {"name":"operations/cp.5118882429105778243","metadata":{"@type":"type.googleapis.com/google.cloudresourcemanager.v1.ProjectCreationStatus","gettable":true}}
+[debug] [2023-05-01T05:19:04.828Z] [Project Creation Poller] Retrying task index 0
+[debug] [2023-05-01T05:19:04.829Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 [none]
+[debug] [2023-05-01T05:19:05.276Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 200
+[debug] [2023-05-01T05:19:05.276Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/operations/cp.5118882429105778243 {"name":"operations/cp.5118882429105778243","metadata":{"@type":"type.googleapis.com/google.cloudresourcemanager.v1.ProjectCreationStatus","gettable":true,"ready":true},"done":true,"response":{"@type":"type.googleapis.com/google.cloudresourcemanager.v1.Project","projectNumber":"346659193546","projectId":"migrationmdt","lifecycleState":"ACTIVE","name":"migrationmdt","createTime":"2023-05-01T05:19:01.948Z","parent":{"type":"organization","id":"795788308688"}}}
+[debug] [2023-05-01T05:19:05.277Z] >>> [apiv2][query] POST https://firebase.googleapis.com/v1beta1/projects/migrationmdt:addFirebase [none]
+[debug] [2023-05-01T05:19:05.962Z] <<< [apiv2][status] POST https://firebase.googleapis.com/v1beta1/projects/migrationmdt:addFirebase 403
+[debug] [2023-05-01T05:19:05.962Z] <<< [apiv2][body] POST https://firebase.googleapis.com/v1beta1/projects/migrationmdt:addFirebase {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2023-05-01T05:19:05.963Z] HTTP Error: 403, The caller does not have permission
+[debug] [2023-05-01T05:19:05.965Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:49:12)
+    at RetryOperation._fn (/usr/local/lib/node_modules/firebase-tools/lib/apiv2.js:288:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to add Firebase to Google Cloud Platform project. See firebase-debug.log for more info.

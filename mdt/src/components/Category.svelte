@@ -18,4 +18,8 @@
         width:5em;
 
     }
+
+    h3 {
+        margin: 0 0 1em 0;
+    }
 </style>

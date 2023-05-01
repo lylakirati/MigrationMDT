@@ -76,12 +76,14 @@
         formSubmitted = true;
 	}
 
-
-    let budgetAllowance = 400; // calculate this logic later
+    $: multiplier = 1;
+    console.log(multiplier);
+    $: budgetAllowance = Math.floor(400 * multiplier); // calculate this logic later
     let allocation = {
         food: 0,
         housing: 0,
         utilities: 0, 
+        communication: 0
         // not implemented for now:
         // communication: 0,
         // transportation: 0,
@@ -96,8 +98,44 @@
         // savings: 0,
         // constructionRepair: 0
     }
-
     $: remainingBudget = budgetAllowance - Object.keys(allocation).reduce((sum, key) => allocation[key] + sum, 0)
+
+    $: budgetAllowanceWithRemit = Math.floor(600 * multiplier); // calculate this logic later
+    let allocationWithRemit = {
+        food: 0,
+        housing: 0,
+        utilities: 0, 
+        communication: 0
+        // not implemented for now:
+        // communication: 0,
+        // transportation: 0,
+        // hygieneHousehold: 0,
+        // miscExpenses: 0,
+        // healthCareMedical: 0,
+        // clothesShoes: 0,
+        // education: 0,
+        // debt: 0,
+        // socialEvents: 0,
+        // productiveSupplies: 0,
+        // savings: 0,
+        // constructionRepair: 0
+    }
+    $: remainingBudgetWithRemit = budgetAllowanceWithRemit - Object.keys(allocationWithRemit).reduce((sum, key) => allocationWithRemit[key] + sum, 0)
+
+    let initialSubmitted = false;
+
+    function resetAmounts() {
+        Object.keys(allocation).map((key) => allocation[key] = 0)
+        multiplier = 1;
+    }
+    function resetAmountsWithRemit() {
+        Object.keys(allocationWithRemit).map((key) => allocation[key] = 0)
+    }
+    function submitInitial() {
+        initialSubmitted = true;
+    }
+
+   
 </script>
 <main>
     <h2>How would your spending be affected by remittances?</h2>
@@ -123,32 +161,60 @@
                 or {avgIncomeUSD} US dollars per month. 
             </p>
             <p>
-                This is comparable to living on <b>400 (temporarily)</b> per month in {userZipCodeInfo.city}. How would you budget
+                This is comparable to living on <b>400 (placeholder)</b> per month in {userZipCodeInfo.city}. How would you budget
                 your monthly allowances with this income?
             </p>
             <p>
                 Input either dollar amounts or percentages, and the rest will be automatically converted.
             </p>
         </div>
-        <div class="interactive">
-            <h2>{remainingBudget} $</h2>
-            <div class="categories">
-                <Category title={"FOOD"} bind:dollars={allocation.food} bind:maxValue={remainingBudget}/>
-                <Category title={"HOUSING"} bind:dollars={allocation.housing} bind:maxValue={remainingBudget}/>
-                <Category title={"UTILITIES"} bind:dollars={allocation.utilities} bind:maxValue={remainingBudget}/>
+        <div class="interactive" id="1">
+            <h2 class="budget">{remainingBudget} $</h2>
+            <div class="options">
+                <button on:click={resetAmounts}>Reset All Values</button>
+                {#if initialSubmitted}
+                    <div>Experiment with different incomes</div>
+                    <input type="range" min="0.1" max="5" class="slider" step="0.1" bind:value={multiplier}>
+                {/if}
             </div>
+            <div class="categories">
+                <Category title={"FOOD"} bind:dollars={allocation.food} bind:maxValue={budgetAllowance}/>
+                <Category title={"HOUSING"} bind:dollars={allocation.housing} bind:maxValue={budgetAllowance}/>
+                <Category title={"UTILITIES"} bind:dollars={allocation.utilities} bind:maxValue={budgetAllowance}/>
+                <Category title={"COMMUNICATIONS"} bind:dollars={allocation.communication} bind:maxValue={budgetAllowance}/>
+            </div>
+            {#if !initialSubmitted}
+                <button on:click={submitInitial}>I'm done</button>
+            {/if}
         </div>
-        <div class="remittances">
-            <p><b>TO BE FILLED IN</b>% of immigrants to the United States from {countryMap[country]} send remittances 
-            back to their home country.</p>
-            <p>
-                The median amount of remittances sent from survey respondents is $<b>To be filled in</b> per month, or
-                <b>convert to local currency</b>
-            </p>
-            <p>
-                This provides a <b>To BE FILLED IN</b>% increase in budget, 
-            </p>
-        </div>
+
+        {#if initialSubmitted}
+            <div class="remittances">
+                <p><b>TBD</b>% of immigrants to the United States from {countryMap[country]} send remittances 
+                back to their home country.</p>
+                <p>
+                    The median amount of remittances sent from survey respondents is $<b>TBD</b> per month, or
+                    <b>convert to local currency</b>
+                </p>
+                <p>
+                    This provides a <b>TBD</b>% increase in budget, or $ <b>TBD</b> 
+                    to live in your city, {userZipCodeInfo.city}.
+                </p>
+                <p>
+                    How would you change your spending with this additional budget?
+                </p>
+            </div>
+            <div class="interactive" id="2">
+                <h2 class="budget">{remainingBudgetWithRemit} $</h2>
+                <button on:click={resetAmountsWithRemit}>Reset</button>
+                <div class="categories">
+                    <Category title={"FOOD"} bind:dollars={allocationWithRemit.food} bind:maxValue={budgetAllowanceWithRemit}/>
+                    <Category title={"HOUSING"} bind:dollars={allocationWithRemit.housing} bind:maxValue={budgetAllowanceWithRemit}/>
+                    <Category title={"UTILITIES"} bind:dollars={allocationWithRemit.utilities} bind:maxValue={budgetAllowanceWithRemit}/>
+                    <Category title={"COMMUNICATIONS"} bind:dollars={allocationWithRemit.communication} bind:maxValue={budgetAllowanceWithRemit}/>
+                </div>
+            </div>
+        {/if}
     {/if}
     {:else} 
     <div>Loading</div>
@@ -160,12 +226,26 @@
         display: flex;
         flex-direction:column;
         gap: 2em;
+        min-height:100vh;
+        padding-bottom:2em;
     }
     .categories {
         display:flex;
         flex-direction:row-wrap;
+        align-items:space-between;
+        justify-content:center;
+        gap:2em;
+    }
+
+    .interactive {
+        display:flex;
+        flex-direction:column;
         align-items:center;
         justify-content:center;
         gap:2em;
+    }
+
+    .interactive .budget {
+        margin:0;
     }
 </style>

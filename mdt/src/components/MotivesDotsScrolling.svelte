@@ -23,7 +23,7 @@
         var stepH = Math.floor(window.innerHeight * 0.75);
         step.style("height", stepH + "px");
 
-        var figureHeight = window.innerHeight - 100;
+        var figureHeight = window.innerHeight - 200;
         var figureMarginTop = (window.innerHeight - figureHeight) / 2;
 
         figure
@@ -92,22 +92,30 @@
         
         <article>
             <div class="step" data-step="1">
-                <p>
-                    Poverty, food insecurity, and lack of economic opportunities for sustainable livelihoods have 
-                    been cited as the top factors behind migration. According to the survey conducted by the World Food 
-                    Programme in 2021, more than 80 percent of households reported that they want to emigrate in search of 
-                    employment opportunities. A large number of people also lack money to secure food and other basic needs, 
-                    which motivates them to find jobs in other countries and send money home. 
+               <p>
+                    The World Food Programme surveyed almost 5000 people from Honduras, Guatemala, and El Salvador,
+                    collecting data about their economic and living situations, as well as their thoughts towards migration.
+                    We're currently looking at all the survey responses that indicated either a desire to migrate externally 
+                    (to another country) or a desire not to, if given the chance to do so.
                 </p>
             </div>
             <div class="step" data-step="2">
-                <p>STEP 2</p>
+                <p>
+                    When separated into their respective categories, we see that while many people do want to migrate 
+                    if given a chance to do so, more people actually would prefer to stay in their home country.
+                </p>
             </div>
             <div class="step" data-step="3">
-                <p>STEP 3</p>
+                <p>Since we're looking at those who want to migrate though, we will focus on them now.</p>
             </div>
             <div class="step" data-step="4">
-                <p>STEP 4</p>
+                <p>
+                    Poverty, food insecurity, and lack of economic opportunities for sustainable livelihoods have 
+                    been cited as the top factors behind migration. According to the survey conducted by the World Food 
+                    Programme in 2021, more than <b>80 percent</b> of households reported that they want to emigrate in search of 
+                    employment opportunities. A large number of people also lack money to secure food and other basic needs, 
+                    which motivates them to find jobs in other countries and send money home. 
+                </p>
             </div>
         </article>
     </section>
@@ -121,7 +129,7 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        background-color: #f3f3f3;
+        /* background-color: #f3f3f3; */
         padding: 1rem;
     }
 
@@ -151,7 +159,7 @@
         -webkit-transform: translate3d(0, 0, 0);
         -moz-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
-        background-color: #8a8a8a;
+        /* background-color: #8a8a8a; */
         z-index: 0;
     }
 
@@ -166,7 +174,7 @@
         transform: translate(-50%, -50%);
         font-size: 8rem;
         font-weight: 900;
-        color: #fff;
+        /* color: #fff; */
     }
 
     figure.is-focused {
@@ -174,22 +182,4 @@
         position: sticky;
     }
 
-    .step {
-        text-align:left;
-        margin: 0 auto 2rem auto;
-        border: 1px solid black;
-    }
-
-    .step:last-child {
-        margin-bottom: 0;
-    }
-
-    .step.is-active {
-        background-color: goldenrod;
-        color: #3b3b3b;
-    }
-
-    .step p {
-        padding: 1rem;
-    }
 </style>

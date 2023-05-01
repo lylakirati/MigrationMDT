@@ -85,28 +85,28 @@
 
 <section id="scrolly2">
     <figure class="income-suffiency-figure">
-        <p>0</p>
         <IncomeSufficiency/>
     </figure>
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                Poverty, food insecurity, and lack of economic opportunities for sustainable livelihoods have 
-                been cited as the top factors behind migration. According to the survey conducted by the World Food 
-                Programme in 2021, more than 80 percent of households reported that they want to emigrate in search of 
-                employment opportunities. A large number of people also lack money to secure food and other basic needs, 
-                which motivates them to find jobs in other countries and send money home. 
+                The fact that the top five reasons for migrating externally are related to finances and money 
+                is also reflected in the economic conditions of the people that were surveyed. Overall,
+                the most amount of people indicated their current income levels were insufficient. 
             </p>
+            
         </div>
         <div class="step" data-step="2">
-            <p>STEP 6</p>
+            <p>
+                To Be Expanded Upon
+            </p>
         </div>
-        <div class="step" data-step="3">
+        <!-- <div class="step" data-step="3">
             <p>STEP 3</p>
         </div>
         <div class="step" data-step="4">
             <p>STEP 4</p>
-        </div>
+        </div> -->
     </article>
 </section>
 
@@ -123,7 +123,7 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        background-color: #f3f3f3;
+        /* background-color: #f3f3f3; */
         padding: 1rem;
     }
 
@@ -153,7 +153,7 @@
         -webkit-transform: translate3d(0, 0, 0);
         -moz-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
-        background-color: #8a8a8a;
+        /* background-color: #8a8a8a; */
         z-index: 0;
     }
 
@@ -171,25 +171,7 @@
         transform: translate(-50%, -50%);
         font-size: 8rem;
         font-weight: 900;
-        color: #fff;
+        /* color: #fff; */
     }
 
-    .step {
-        text-align:left;
-        margin: 0 auto 2rem auto;
-        border: 1px solid black;
-    }
-
-    .step:last-child {
-        margin-bottom: 0;
-    }
-
-    .step.is-active {
-        background-color: goldenrod;
-        color: #3b3b3b;
-    }
-
-    .step p {
-        padding: 1rem;
-    }
 </style>

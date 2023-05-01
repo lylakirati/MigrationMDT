@@ -134,7 +134,11 @@
             aria-label = "Show no remit"
             on:click={() => showNoRemit()}
         >
-            Show no remit
+        {#if showNoRemitStatus === 0}
+            Show Without Remittances
+        {:else}
+            Show With Remittances
+        {/if}
         </button>
     </label>
     
