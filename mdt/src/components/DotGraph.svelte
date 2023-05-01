@@ -191,7 +191,7 @@
 
 	onMount(async () => {
 
-		data = await d3.csv('../../src/data/main_cleaned.csv');
+		data = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/mdt/src/data/main_cleaned.csv");
 
 
 		data = data.filter((d) => +d['mig_ext_intention'] !== 99);

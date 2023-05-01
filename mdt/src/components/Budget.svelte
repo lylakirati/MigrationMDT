@@ -41,7 +41,7 @@
     };
 
     onMount(async () => {
-		let data = await d3.csv('../../src/data/uszips.csv'); 
+		let data = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/mdt/src/data/uszips.csv"); 
 
 		for (let d of data) {
 			zipCodeData[d.zip] = d; // create map
