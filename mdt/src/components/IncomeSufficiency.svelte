@@ -48,13 +48,12 @@
 
 	// load data and partition into income sufficiency values
 	onMount(async () => {
-		data = await d3.csv('../../src/data/main_cleaned.csv');
+		data = await d3.csv('../data/main_cleaned.csv');
 
 		data = data.filter((d) => +d['income_sufficiency_6m'] !== 99);
 		for (let d of data) {
 			incomeSufficiency[incomeSufficiencyAssocs[+d['income_sufficiency_6m']]].push(d);
 		}
-
 		for (const key of Object.keys(incomeSufficiencyAmounts)) {
 			incomeSufficiencyAmounts[key] = incomeSufficiency[key].length;
 		}
