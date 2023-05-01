@@ -1,5 +1,9 @@
 <script>
 	import { scaleLinear, scaleOrdinal } from 'd3-scale';
+	// import { readFileSync } from 'fs';
+	// import path from 'path';
+	// import { promises as fs } from 'fs'
+	// import { dsvFormat } from 'd3'
 	import * as d3 from 'd3';
 
 	import { onMount } from 'svelte';
@@ -48,9 +52,22 @@
 
 	// load data and partition into income sufficiency values
 	onMount(async () => {
-		data = await d3.csv('src/data/main_cleaned.csv');
-
+		// data = await d3.csv('src/data/main_cleaned.csv');
+		
+		data = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/mdt/src/data/main_cleaned.csv");
+		// https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/mdt/src/data/main_cleaned.csv
 		data = data.filter((d) => +d['income_sufficiency_6m'] !== 99);
+
+		// const file = path.join(process.cwd(), 'src', 'data/main_cleaned.csv');
+  		// data = readFileSync(file, 'utf8');
+		// data = data.filter((d) => +d['income_sufficiency_6m'] !== 99);
+
+		// const filePath = path.join(process.cwd(), 'src/data/main_cleaned.csv');
+  		// const fileString = await fs.readFile(filePath, 'utf8');
+		// data = csv.parse(fileString, (d) => {
+		// 	if (d.slug === context.params.id) return d;
+		// })
+
 		for (let d of data) {
 			incomeSufficiency[incomeSufficiencyAssocs[+d['income_sufficiency_6m']]].push(d);
 		}
