@@ -1,7 +1,9 @@
 <script>
 	import MotivesDotsScrolling from './../components/MotivesDotsScrolling.svelte';
     import IncomeSufficiencyScrolling from '../components/IncomeSufficiencyScrolling.svelte';
-    import App from '../components/App.svelte';
+    import Budget from '../components/Budget.svelte';
+	import DotGraph from '../components/DotGraph.svelte';
+	import RemitScrolling from '../components/RemitScrolling.svelte';
     // import Spending from '../components/Spending.svelte';
 </script>
 
@@ -28,6 +30,12 @@
     </section>
     <section>
         <IncomeSufficiencyScrolling />
+    </section>
+    <section>
+        <RemitScrolling />
+    </section>
+    <section>
+        <Budget/>
     </section>
 </main>
 

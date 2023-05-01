@@ -107,8 +107,8 @@
 
 
 	// overall chart width, height, and paddings
-	let chartWidth = 720;
-	let chartHeight = 1800;
+	let chartWidth = 800;
+	let chartHeight = 1000;
 	const paddings = {
 		top: 25,
 		left: 25,
@@ -122,7 +122,7 @@
 	let columnWidth =
 		(chartWidth - paddings.right - paddings.left - 4 * paddingBetween) / numCategories;
 
-	const dotsPerRow = 10;
+	const dotsPerRow = 15;
 
 	// set scaling variables
 	$: xScale = scaleLinear()
@@ -194,7 +194,7 @@
 		line-height: 1;
 		/* font-size: 12px; */
 		color: var(--color-text);
-		margin-top: 100px;
+		margin:0;
 	}
 	.headers {
 		display: flex;

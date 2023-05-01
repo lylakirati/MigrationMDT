@@ -13,6 +13,7 @@
 
     let index = 0;
 
+    let figureWidth = 800; // responsive, potentially for the future
     // initialize the scrollama
     let scroller = scrollama();
 
@@ -22,7 +23,7 @@
         var stepH = Math.floor(window.innerHeight * 0.75);
         step.style("height", stepH + "px");
 
-        var figureHeight = window.innerHeight - 200;
+        var figureHeight = window.innerHeight - 100;
         var figureMarginTop = (window.innerHeight - figureHeight) / 2;
 
         figure
@@ -39,6 +40,7 @@
         step.classed("is-active", function(d, i) {
           return i === response.index;
         });
+        index = response.index;
         var val = d3.select(response.element).attr("data-step");
         // update graphic based on step
         figure.select("p").text(response.index + 1);
@@ -84,8 +86,7 @@
     <section id="scrolly" bind:this={scrolly}>
             
         <figure class="migration-motives">
-            <p>0</p>
-            <!-- <DotGraph class='migration-motives'/> -->
+            <DotGraph state={index}/>
             
         </figure>
         

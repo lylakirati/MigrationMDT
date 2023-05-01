@@ -3,78 +3,79 @@
     import scrollama from "scrollama";
     import * as d3 from "d3";
     import {onMount} from "svelte";
+	import Spending from './Spending.svelte';
 
-    let main2;
-    let scrolly2;
-    let figure2;
-    let article2;
-    let step2;
+    let main3;
+    let scrolly3;
+    let figure3;
+    let article3;
+    let step3;
 
     // initialize the scrollama
-    let scroller2 = scrollama();
+    let scroller3 = scrollama();
 
     // generic window resize listener event
-    function handleResize2() {
+    function handleResize3() {
         // 1. update height of step elements
         let stepH = Math.floor(window.innerHeight * 0.75);
-        step2.style("height", stepH + "px");
+        step3.style("height", stepH + "px");
 
         console.log("resized");
 
-        let figureHeight = window.innerHeight - 200;
-        let figureMarginTop = (window.innerHeight - figureHeight) / 2;
+        let figureHeight = window.innerHeight - 100;
+        let figureMarginTop = (window.innerHeight - figureHeight) / 3;
 
-        figure2
+        figure3
             .style("height", figureHeight + "px")
             .style("top", figureMarginTop + "px");
 
         // 3. tell scrollama to update new element dimensions
-        scroller2.resize();
+        scroller3.resize();
     }
 
     // scrollama event handlers
-    function handleStepEnter2(response) {
+    function handleStepEnter3(response) {
         console.log("enter", response);
-        step2.classed("is-active", function(d, i) {
+        step3.classed("is-active", function(d, i) {
           return i === response.index;
         });
         var val = d3.select(response.element).attr("data-step");
         // update graphic based on step
-        figure2.select("p").text(response.index + 1);
-        figure2.classed("is-fixed", true);
-        figure2.classed("is-bottom", false);
+        figure3.select("p").text(response.index + 1);
+        figure3.classed("is-fixed", true);
+        figure3.classed("is-bottom", false);
     }
 
-    function handleStepExit2(response) {
+    function handleStepExit3(response) {
         console.log("exit", response);
         d3.select(response.element).classed("is-active", false);
     }
 
     onMount(() =>{
-        // main2 = d3.select("main");
-		scrolly2 = d3.select("#scrolly2");
-		figure2 = scrolly2.select("figure");
-	    article2 = scrolly2.select("article");
-    	step2 = article2.selectAll(".step");
+        // main3 = d3.select("main");
+		scrolly3 = d3.select("#scrolly3");
+		figure3 = scrolly3.select("figure");
+	    article3 = scrolly3.select("article");
+    	step3 = article3.selectAll(".step");
 
-        console.log(step2);
+        console.log(step3);
 
         // 1. force a resize on load to ensure proper dimensions are sent to scrollama
         
-        handleResize2();
+        handleResize3();
         
-        // 2. setup the scroller passing options
+        // 3. setup the scroller passing options
         // 		this will also initialize trigger observations
         // 3. bind scrollama event handlers (this can be chained like below)
-        scroller2
+        scroller3
             .setup({
                 container:".income-sufficiency",
-                step: "#scrolly2 article .step",
-                offset: 0.67,
+                step: "#scrolly3 article .step",
+                offset: 1,
                 debug: false
             })
-            .onStepEnter(handleStepEnter2)
-            .onStepExit(handleStepExit2);
+            .onStepEnter(handleStepEnter3)
+            .onStepExit(handleStepExit3);
     }
 
     );
@@ -83,19 +84,15 @@
     // init();
 </script>
 
-<section id="scrolly2">
-    <figure class="income-suffiency-figure">
-        <p>0</p>
-        <IncomeSufficiency/>
+<section id="scrolly3">
+    <figure>
+        <Spending/>
+        <!-- <p>0</p> -->
     </figure>
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                Poverty, food insecurity, and lack of economic opportunities for sustainable livelihoods have 
-                been cited as the top factors behind migration. According to the survey conducted by the World Food 
-                Programme in 2021, more than 80 percent of households reported that they want to emigrate in search of 
-                employment opportunities. A large number of people also lack money to secure food and other basic needs, 
-                which motivates them to find jobs in other countries and send money home. 
+                Blurb here
             </p>
         </div>
         <div class="step" data-step="2">
@@ -114,11 +111,8 @@
 
 
 <style>
-    .income-sufficiency {
-        margin:0;
-    }
 
-    #scrolly2 {
+    #scrolly3 {
         position: relative;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -127,7 +121,7 @@
         padding: 1rem;
     }
 
-    #scrolly2>* {
+    #scrolly3>* {
         -webkit-box-flex: 1;
         -ms-flex: 1;
         flex: 1;

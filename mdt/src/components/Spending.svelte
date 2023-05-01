@@ -11,7 +11,7 @@
     //end: constants
     
     //begin: layout conf.
-    var svgWidth = 960;
+    var svgWidth = 850;
     var svgHeight = 500;
     var margin = {top: 10, right: 10, bottom: 10, left: 10};
     var height = svgHeight - margin.top - margin.bottom;
@@ -293,8 +293,15 @@
 
 
 <style>
+    main{
+        margin:0;
+        width:100%;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+    }
     svg {
-        background-color: rgb(250,250,250);
+        /* background-color: rgb(250,250,250); */
     }
     
     #title {

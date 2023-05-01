@@ -77,7 +77,7 @@
 	}
 
 
-    let budgetAllowance = 2000; // calculate this logic later
+    let budgetAllowance = 400; // calculate this logic later
     let allocation = {
         food: 0,
         housing: 0,
@@ -100,6 +100,7 @@
     $: remainingBudget = budgetAllowance - Object.keys(allocation).reduce((sum, key) => allocation[key] + sum, 0)
 </script>
 <main>
+    <h2>How would your spending be affected by remittances?</h2>
     {#if loaded}
     <form on:submit|preventDefault={handleSubmit}>
         <!-- <input id="country" name="country" type="text"> -->
@@ -122,7 +123,7 @@
                 or {avgIncomeUSD} US dollars per month. 
             </p>
             <p>
-                This is comparable to living on <b>figure this out</b> per month in {userZipCodeInfo.city}. How would you budget
+                This is comparable to living on <b>400 (temporarily)</b> per month in {userZipCodeInfo.city}. How would you budget
                 your monthly allowances with this income?
             </p>
             <p>
@@ -136,6 +137,17 @@
                 <Category title={"HOUSING"} bind:dollars={allocation.housing} bind:maxValue={remainingBudget}/>
                 <Category title={"UTILITIES"} bind:dollars={allocation.utilities} bind:maxValue={remainingBudget}/>
             </div>
+        </div>
+        <div class="remittances">
+            <p><b>TO BE FILLED IN</b>% of immigrants to the United States from {countryMap[country]} send remittances 
+            back to their home country.</p>
+            <p>
+                The median amount of remittances sent from survey respondents is $<b>To be filled in</b> per month, or
+                <b>convert to local currency</b>
+            </p>
+            <p>
+                This provides a <b>To BE FILLED IN</b>% increase in budget, 
+            </p>
         </div>
     {/if}
     {:else} 
