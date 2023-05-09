@@ -13,7 +13,7 @@
 
     let index = 0;
 
-    let figureWidth = 800; // responsive, potentially for the future
+    let figureWidth = 600; // responsive, potentially for the future
     // initialize the scrollama
     let scroller = scrollama();
 
@@ -93,16 +93,22 @@
         <article>
             <div class="step" data-step="1">
                <p>
-                    The World Food Programme surveyed almost 5000 people from Honduras, Guatemala, and El Salvador,
+                    The World Food Programme surveyed almost 5,000 households from Honduras, Guatemala, and El Salvador,
                     collecting data about their economic and living situations, as well as their thoughts towards migration.
-                    We're currently looking at all the survey responses that indicated either a desire to migrate externally 
-                    (to another country) or a desire not to, if given the chance to do so.
+                    <!-- We're currently looking at all the survey responses that indicated either a desire to migrate externally 
+                    (to another country) or a desire not to, if given the chance to do so. -->
                 </p>
             </div>
+            <div class="step" data-step="1">
+                <p>
+                    Each dot represents 5 households that were surveyed.
+                </p>
+             </div>
             <div class="step" data-step="2">
                 <p>
-                    When separated into their respective categories, we see that while many people do want to migrate 
-                    if given a chance to do so, more people actually would prefer to stay in their home country.
+                    When asked about their intention to move abroad, many people do want to 
+                    if given a chance to do so. But a large group of them 
+                    would actually prefer to stay in their home country.
                 </p>
             </div>
             <div class="step" data-step="3">
@@ -145,17 +151,23 @@
 
     article {
         position: relative;
-        padding: 0 1rem;
-        max-width: 20rem;
+        padding: 20 5rem;
+        max-width: 50rem;
+        right: 22rem;
     }
     
+    article p {
+        background-color: #FFFFFF;
+        padding: 10 5rem;
+        box-shadow: 3px 3px 3px #BEBEBE;
+    }
 
     figure {
         position: -webkit-sticky;
         position: sticky;
-        width: 100%;
-        height:80vh;
-        margin: 0;
+        width: 50%;
+        height: 80vh;
+        margin-left: 6em;
         -webkit-transform: translate3d(0, 0, 0);
         -moz-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);

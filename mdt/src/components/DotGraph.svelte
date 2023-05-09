@@ -53,7 +53,7 @@
 		right: 25,
 		bottom: 50
 	};
-	const padding_between = 10;
+	const padding_between = 20;
 
 	const dotsPerRow = 100;
 
@@ -136,22 +136,22 @@
 						enter => enter.append("circle")
 					)
 					.transition()
-					.duration(250)
-					.ease(d3.easeLinear)
+					.duration(550)
+					.ease(d3.easeQuadInOut)
 					.attr("cx", (d, i) => xScale(i % dotsPerRow))
             		.attr("cy", (d, i) => yScale(i, dotsPerRow))
             		.attr("r", 3)
 					.attr("opacity", 1)
             		.attr("fill", (d) => colorScale(d['mig_ext_intention']))
 				break;
-			case 1: // second case: split data into people who want to migrate and people who don't want to migrate
+			case 2: // second case: split data into people who want to migrate and people who don't want to migrate
 				svg
 					.selectAll('circle')
 					.data(data)
 					.join("circle")
 					.transition()
-					.duration(250)
-					.ease(d3.easeLinear)
+					.duration(550)
+					.ease(d3.easeQuadInOut)
 					.attr('cx', (d) =>
 						d['mig_ext_intention'] === 1 ? xScale2(d['ind-2'] % (dotsPerRow/2)) : xScale3(d['ind-2'] % (dotsPerRow/2))
 					)
@@ -159,37 +159,43 @@
             		.attr("r", 3)
 					.attr("fill", (d) => colorScale(d['mig_ext_intention']))
 				break;
-			case 2: // third case: only look at people who want to migrate by removing all people who don't want to migrate
+			case 3: // third case: only look at people who want to migrate by removing all people who don't want to migrate
 				svg
 					.selectAll('circle')
 					.filter((d) => d['mig_ext_intention'] !== 1)
-					.transition()
-					.duration(250)
-					.ease(d3.easeLinear)
-					.attr("opacity", 0)
 					.remove()
+
+				// svg
+				// 	.selectAll('circle')
+				// 	.filter((d) => d['mig_ext_intention'] !== 1)
+				// 	.transition()
+				// 	.duration(550)
+				// 	.ease(d3.easeQuadInOut)
+				// 	.attr("opacity", 0)
+				// 	.remove()
 
 				svg
 					.selectAll('circle')
 					.data(data.filter(d => d['mig_ext_intention'] === 1))
 					.join('circle')
 					.transition()
-					.delay(250)
-					.duration(250)
-					.ease(d3.easeLinear)
+					.delay(550)
+					.duration(550)
+					.ease(d3.easeQuadInOut)
 					.attr("cx", (d, i) => xScale(d['ind-2'] % dotsPerRow))
             		.attr("cy", (d, i) => yScale(d['ind-2'], dotsPerRow))
 					.attr("opacity", 1)
 					.attr("fill", (d) => colorScale(d['mig_ext_intention']))
+
 				break;
-			case 3: // fourth case: Separate into different categories based on migration motivation
+			case 4: // fourth case: Separate into different categories based on migration motivation
 				svg
 					.selectAll('circle')
 					.data(dataWithCategories)
 					.join('circle')
 					.transition()
-					.duration(250)
-					.ease(d3.easeLinear)
+					.duration(850)
+					.ease(d3.easeQuadInOut)
 					.attr("cx", (d, i) => xScaleCategories(d.categoryIndex, d.category))
             		.attr("cy", (d, i) => yScaleCategories(d.categoryIndex, d.category))
 					.attr("fill", (d) => colorScaleCategories(d.category))
@@ -283,12 +289,12 @@
 		<h2>Unsorted Migration</h2>
 	{/if} -->
 	<div class="visualization">
-		{#if state === 1}
+		<!-- {#if state === 1}
 			<div class="headers">
 				<div>Want To Migrate (Externally)</div>
 				<div>Don't Want To Migrate (Externally)</div>
 			</div>
-		{/if}
+		{/if} -->
 			<svg width={chartWidth} height={chartHeight} >
 				<g></g>
 				<!-- {#each data as d, i}
@@ -302,7 +308,33 @@
 						/>
 					{/if}
 				{/each} -->
-				{#if state === 3}
+				{#if state === 2}
+					<g>
+						<text 
+							x={columnWidth * 1 / 2 + 100}
+							y={((0 - 0 % 2 )/2) * 300 + 15}
+							text-anchor={'middle'}
+						>
+							Want To Emigrate
+						</text>
+						<text 
+							x={columnWidth * 2 / 2 + 80 * 4 + 60}
+							y={((1 - 1 %2)/2) * 300 + 15}
+							text-anchor={'middle'}>
+							Do NOT Want To Emigrate
+						</text>
+					</g>
+				{:else if state === 3}
+					<g>
+						<text 
+							x={columnWidth * 1 / 2 + 100}
+							y={((0 - 0 % 2 )/2) * 300 + 15}
+							text-anchor={'middle'}
+						>
+							Want To Emigrate
+						</text>
+					</g>
+				{:else if state === 4}
 					<g>
 						{#each order as category, i}
 							<text 
