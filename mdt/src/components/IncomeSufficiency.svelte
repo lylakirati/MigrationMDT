@@ -107,6 +107,9 @@
 	
 	// update country, as well as makes it so that the button that was pressed is toggled
 	function updateCountry(country) {
+		// var selectBox = document.getElementById("select-country");
+		// var selectedCountry = selectBox.options[selectBox.selectedIndex].value;
+		// alert(selectedValue);
 		if (country === 'all' || (country === curCountry && countryToggle)) {
 			// if equal and country active, reset
 			updateData(data);
@@ -114,10 +117,10 @@
 			curCountry = '';
 			return;
 		}
+		
 		countryToggle = true;
 		curCountry = country;
 		updateData(data.filter((d) => d.country === country));
-		
 	}
 	
 
@@ -156,16 +159,32 @@
 </script>
 
 <main>
-	<h2>Levels of Income Sufficiency</h2>
-	<div class={"selections"}>
-		{#each Object.keys(countryMap) as country}
-			<button on:click={() => updateCountry(country)}> {countryMap[country]} </button>
-		{/each}
-		<button on:click={() => updateCountry('all')}> All Countries </button>
+	
+	<div class="income-header">
+		<div class={"selections"}>
+		<!-- <div class="dropdown"> -->
+			<label for="country-names">Choose a country:</label>
+			<select id = "select-country" onchange="updateCountry(value);">
+				<option value="all">All countries</option>
+				{#each Object.keys(countryMap) as country}
+					<option value = "{country}">
+						{countryMap[country]}
+					</option>
+				{/each}
+			</select>
+			<!-- {#each Object.keys(countryMap) as country}
+				<button on:click={() => updateCountry(country)}> {countryMap[country]} </button>
+			{/each}
+			<button on:click={() => updateCountry('all')}> All Countries </button> -->
+		</div>
+		
+
+		<h2 class={"current-country"}>Levels of income sufficiency for households in {countryToggle ? countryMap[curCountry] : 'all three countries'}</h2>
+		<!-- <div class={"current-country"}>
+			Viewing data for {countryToggle ? countryMap[curCountry] : 'all countries'}
+		</div> -->
 	</div>
-	<div class={"current-country"}>
-		Viewing data for {countryToggle ? countryMap[curCountry] : 'all countries'}
-	</div>
+
 	<div>One <svg width={10} height={10}><circle r={3} cx={5} cy={5}></circle></svg>  represents 5 people</div>
 	<div class="visualization">
 		{#if data.length > 1}
@@ -201,6 +220,7 @@
 		{/if}
 	</div>
 </main>
+
 
 <style>
 	main {
@@ -239,8 +259,13 @@
 		padding: 10px;
 	}
 
+	/* .income-header {
+		margin-left: 15em;
+	} */
+
 	.category {
 		font-weight: 600;
+		font-size: 0.9em;
 	}
 
 	.selections {
@@ -249,11 +274,14 @@
 		justify-content:center;
 		gap: 1em;
 	}
+	
 	.current-country {
 		padding: .5em;
 	}
+
 	.visualization {
 		padding:1em;
 	}
+
 
 </style>

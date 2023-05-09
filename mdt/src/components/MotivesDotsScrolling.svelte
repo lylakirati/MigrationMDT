@@ -106,20 +106,25 @@
              </div>
             <div class="step" data-step="2">
                 <p>
-                    When asked about their intention to move abroad, many people do want to 
-                    if given a chance to do so. But a large group of them 
-                    would actually prefer to stay in their home country.
+                    When asked about their intention to move abroad, 
+                    a large group of them would prefer to stay in their home country, 
+                    citing family separation 
+                    and rootedness as
+                    their primary concerns. But <b>over 43% say they do want to migrate
+                    if given a chance to do so</b>.
                 </p>
             </div>
             <div class="step" data-step="3">
-                <p>Since we're looking at those who want to migrate though, we will focus on them now.</p>
+                <p>So what drives these Central Americans to migrate?</p>
             </div>
             <div class="step" data-step="4">
                 <p>
-                    Poverty, food insecurity, and lack of economic opportunities for sustainable livelihoods have 
-                    been cited as the top factors behind migration. According to the survey conducted by the World Food 
-                    Programme in 2021, more than <b>80 percent</b> of households reported that they want to emigrate in search of 
-                    employment opportunities. A large number of people also lack money to secure food and other basic needs, 
+                    <b>Poverty, food insecurity, and lack of economic opportunities</b>
+                    for sustainable livelihoods have 
+                    been cited as the top factors behind migration. More than <b>80 percent</b>
+                    reported that they want to move abroad in search of 
+                    <b>employment opportunities</b>. 
+                    A large number of households also <b>lack money to secure food and other basic needs</b>, 
                     which motivates them to find jobs in other countries and send money home. 
                 </p>
             </div>

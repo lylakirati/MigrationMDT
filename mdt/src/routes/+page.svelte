@@ -93,6 +93,11 @@
         font-family: 'Nunito', sans-serif;
     }
 
+    :global(h2) {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.1em;
+    }
+
     #title {
         padding:2em 25em;
         background: var(--primary-color);

@@ -28,11 +28,11 @@
 	let order = ["1", "2", "6", "7", "8", "15"]; // to make a 3 x 2 grid
 
 	let categoryNames = {
-		1: "Better Job/Salary",
+		1: "Find Better Jobs",
 		2: "Unemployment",
-		6: "Money for Food",
-		7: "Money for Other Basic Needs",
-		8: "Remittances",
+		6: "Lack Money for Food",
+		7: "Lack Money for Other Basic Needs",
+		8: "Send Remittances",
 		15: "Tourism"
 	}
 
@@ -83,7 +83,7 @@
 		.range([0,columnWidth])
 	$: colorScaleCategories = scaleOrdinal()
 		.domain(order)
-		.range([' #4FAA5F', '#1C52A3', '#6297D5', '#824936', '#B990EC', '#F8CE6D']);
+		.range(['#4FAA5F', '#1C52A3', '#6297D5', '#824936', '#B990EC', '#F8CE6D']);
 
 
 
@@ -179,7 +179,7 @@
 					.data(data.filter(d => d['mig_ext_intention'] === 1))
 					.join('circle')
 					.transition()
-					.delay(550)
+					.delay(350)
 					.duration(550)
 					.ease(d3.easeQuadInOut)
 					.attr("cx", (d, i) => xScale(d['ind-2'] % dotsPerRow))
@@ -238,6 +238,9 @@
 		}
 		state = 0;
 		transition();
+
+		// console.log(doesNotWantMigrateCounter);
+		// console.log(wantsMigrateCounter);
 		// TODO: populate dataByMotivation to look at the top 5 reasons for migrating
 
 		});
