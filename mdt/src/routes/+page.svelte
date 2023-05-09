@@ -68,7 +68,7 @@
     
 
     :global(main) {
-		text-align: center;
+		/* text-align: center; */
 		font-family: 'Nunito', sans-serif;
 		font-weight: 300;
 		line-height: 1.5;
@@ -94,11 +94,23 @@
     }
 
     #title {
-        padding:5em;
+        padding:5em 15em;
         background: var(--primary-color);
         color: var(--secondary-color-text);
-        text-align:center;
+        /* text-align:center; */
 
+    }
+
+    #title h1 {
+        text-align:center;
+    }
+
+    #title .authors {
+        text-align:center;
+    }
+
+    #intro {
+        padding: 2em 15em;
     }
     h1 {
         font-weight: 700;

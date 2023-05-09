@@ -88,8 +88,8 @@
                 )
                 .end();
                 
-            d3.select(".button")
-                .style("background-color", "#264561")
+            // d3.select(".button")
+            //     .style("background-color", "#264561")
             showNoRemitStatus = 1;
         } else {
             d3.selectAll('.cell-remit')

@@ -141,6 +141,7 @@
 					.attr("cx", (d, i) => xScale(i % dotsPerRow))
             		.attr("cy", (d, i) => yScale(i, dotsPerRow))
             		.attr("r", 3)
+					.attr("opacity", 1)
             		.attr("fill", (d) => colorScale(d['mig_ext_intention']))
 				break;
 			case 1: // second case: split data into people who want to migrate and people who don't want to migrate
@@ -161,13 +162,24 @@
 			case 2: // third case: only look at people who want to migrate by removing all people who don't want to migrate
 				svg
 					.selectAll('circle')
-					.data(data.filter(d => d['mig_ext_intention'] === 1))
-					.join('circle')
+					.filter((d) => d['mig_ext_intention'] !== 1)
 					.transition()
 					.duration(250)
 					.ease(d3.easeLinear)
-					.attr("cx", (d, i) => xScale(i % dotsPerRow))
-            		.attr("cy", (d, i) => yScale(i, dotsPerRow))
+					.attr("opacity", 0)
+					.remove()
+
+				svg
+					.selectAll('circle')
+					.data(data.filter(d => d['mig_ext_intention'] === 1))
+					.join('circle')
+					.transition()
+					.delay(250)
+					.duration(250)
+					.ease(d3.easeLinear)
+					.attr("cx", (d, i) => xScale(d['ind-2'] % dotsPerRow))
+            		.attr("cy", (d, i) => yScale(d['ind-2'], dotsPerRow))
+					.attr("opacity", 1)
 					.attr("fill", (d) => colorScale(d['mig_ext_intention']))
 				break;
 			case 3: // fourth case: Separate into different categories based on migration motivation
