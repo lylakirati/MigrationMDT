@@ -114,7 +114,7 @@
         <div class="step" data-step="4">
             <p>
                 Compare these numbers to the spendings of households who have no financial support from abroad.
-                Their spendings in every category drop. In particular, they have much less to spend on
+                Their spendings in every category drop up to 70%. In particular, they have much less to spend on
                 food, healthcare, and housing. 
             </p>
         </div>
