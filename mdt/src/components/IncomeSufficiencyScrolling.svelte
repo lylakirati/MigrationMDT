@@ -134,31 +134,31 @@
         padding:2em 0;
     }
 
-    /* article {
+    article {
         position: relative;
         padding: 0 1rem;
         max-width: 20rem;
     }
-     */
-    article {
+    
+    /* article {
         position: relative;
         padding: 20 5rem;
         max-width: 50rem;
         right: 22rem;
-    }
+    } */
     
-    article p {
+    /* article p {
         background-color: #FFFFFF;
         padding: 10 5rem;
         box-shadow: 3px 3px 3px #BEBEBE;
-    }
+    } */
 
     figure {
         position: -webkit-sticky;
         position: sticky;
-        width: 50%;
+        width: 100%;
         height:80vh;
-        margin-left: 6em;
+        margin: 0;
         -webkit-transform: translate3d(0, 0, 0);
         -moz-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
@@ -182,5 +182,12 @@
         font-weight: 900;
         /* color: #fff; */
     }
+
+    .step {
+        text-align:left;
+        margin: 0 auto 2rem auto;
+        border-left: 2px solid var(--primary-color);
+    }
+
 
 </style>

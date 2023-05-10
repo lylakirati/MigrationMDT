@@ -85,6 +85,14 @@
         background: var(--button-background);
     }
 
+    :global(button.active)  {
+        /* filter: brightness(75%); */
+        background: #ecac15;
+        border: 2px solid black;
+        box-shadow: 3px 3px 3px #BEBEBE;
+        /* color: #FFFFFF; */
+    }
+
     :global(button:hover) {
         filter: brightness(95%);
     }

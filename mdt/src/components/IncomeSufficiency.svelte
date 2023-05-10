@@ -115,8 +115,21 @@
 			updateData(data);
 			countryToggle = false;
 			curCountry = '';
+
+			d3.selectAll("button")
+				.classed("active", false);
+
+			d3.select("#button-all")
+				.classed("active", true);
+
 			return;
 		}
+
+		d3.selectAll("button")
+			.classed("active", false);
+
+		d3.select("#button-" + country)
+			.classed("active", true);
 		
 		countryToggle = true;
 		curCountry = country;
@@ -126,8 +139,8 @@
 
 
 	// overall chart width, height, and paddings
-	let chartWidth = 800;
-	let chartHeight = 1000;
+	let chartWidth = 700; // 800
+	let chartHeight = 850; // 1000
 	const paddings = {
 		top: 25,
 		left: 25,
@@ -160,22 +173,12 @@
 
 <main>
 	
-	<div class="income-header">
 		<div class={"selections"}>
-		<!-- <div class="dropdown"> -->
-			<label for="country-names">Choose a country:</label>
-			<select id = "select-country" onchange="updateCountry(value);">
-				<option value="all">All countries</option>
-				{#each Object.keys(countryMap) as country}
-					<option value = "{country}">
-						{countryMap[country]}
-					</option>
-				{/each}
-			</select>
-			<!-- {#each Object.keys(countryMap) as country}
-				<button on:click={() => updateCountry(country)}> {countryMap[country]} </button>
+			Choose a country:
+			<button id = "button-all" class = "active" on:click={() => updateCountry('all')}> All Countries </button>
+			{#each Object.keys(countryMap) as country}
+				<button id = "button-{country}" on:click={() => updateCountry(country)}> {countryMap[country]} </button>
 			{/each}
-			<button on:click={() => updateCountry('all')}> All Countries </button> -->
 		</div>
 		
 
@@ -183,9 +186,8 @@
 		<!-- <div class={"current-country"}>
 			Viewing data for {countryToggle ? countryMap[curCountry] : 'all countries'}
 		</div> -->
-	</div>
 
-	<div>One <svg width={10} height={10}><circle r={3} cx={5} cy={5}></circle></svg>  represents 5 people</div>
+	<div>One <svg width={10} height={10}><circle r={3} cx={5} cy={5}></circle></svg>  represents 5 households</div>
 	<div class="visualization">
 		{#if data.length > 1}
 			<svg width={chartWidth} height={chartHeight}>
@@ -273,6 +275,7 @@
 		flex-direction:row;
 		justify-content:center;
 		gap: 1em;
+		padding: 10px;
 	}
 	
 	.current-country {
