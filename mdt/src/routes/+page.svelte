@@ -161,4 +161,13 @@
         padding: 1rem;
     }
 
+    :global(.selections) {
+		/* display:flex; */
+        display:inline-flex;
+		flex-direction:row;
+		justify-content:center;
+		gap: 1em;
+		padding: 10px;
+	}
+
 </style>

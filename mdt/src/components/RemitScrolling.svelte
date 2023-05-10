@@ -11,13 +11,15 @@
     let article3;
     let step3;
 
+    let index = 0;
+
     // initialize the scrollama
     let scroller3 = scrollama();
 
     // generic window resize listener event
     function handleResize3() {
         // 1. update height of step elements
-        let stepH = Math.floor(window.innerHeight * 0.75);
+        let stepH = Math.floor(window.innerHeight * 0.99);
         step3.style("height", stepH + "px");
 
         console.log("resized");
@@ -39,6 +41,7 @@
         step3.classed("is-active", function(d, i) {
           return i === response.index;
         });
+        // index = response.index;
         var val = d3.select(response.element).attr("data-step");
         // update graphic based on step
         figure3.select("p").text(response.index + 1);
@@ -48,6 +51,7 @@
 
     function handleStepExit3(response) {
         console.log("exit", response);
+        index = response.index;
         d3.select(response.element).classed("is-active", false);
     }
 
@@ -86,17 +90,35 @@
 
 <section id="scrolly3">
     <figure>
-        <Spending/>
+        <Spending state = {index}/>
         <!-- <p>0</p> -->
     </figure>
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                Seeing as how many of the people surveyed indicated that their income is insufficient, 
-                migrating to another country can allow people to gain more resources to help aid their families.
+                Migrating to find a job in another country can allow Central Americans to earn higher wage and send money home to aid their families.
             </p>
         </div>
         <div class="step" data-step="2">
+            <p>
+                This is what the average monthly expenditure of households who receive financial support
+                from abroad looks like. They spend approximately US$205 per month. 
+            </p>
+        </div>
+        <div class="step" data-step="3">
+            <p>
+                Unlike the U.S. where housing is relatively expensive, over 35% of Central American households'
+                monthly expenditure is for securing food and drinking water.
+            </p>
+        </div>
+        <div class="step" data-step="4">
+            <p>
+                Compare these numbers to the spendings of households who have no financial support from abroad.
+                Their spendings in every category drop. In particular, they have much less to spend on
+                food, healthcare, and housing. 
+            </p>
+        </div>
+        <div class="step" data-step="5">
             <p>
                 While the amount of remittances that households receive vary by country and by situation, having 
                 remittances from abroad as an additional source of income can play a large role in supporting households.
@@ -179,15 +201,11 @@
     }
 
     .step:last-child {
-        margin-bottom: 0;
+        margin-bottom: 20em;
     }
 
     .step.is-active {
         background-color: goldenrod;
         color: #3b3b3b;
-    }
-
-    .step p {
-        padding: 1rem;
     }
 </style>

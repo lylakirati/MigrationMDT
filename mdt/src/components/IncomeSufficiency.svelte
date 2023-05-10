@@ -173,19 +173,16 @@
 
 <main>
 	
-		<div class={"selections"}>
-			Choose a country:
-			<button id = "button-all" class = "active" on:click={() => updateCountry('all')}> All Countries </button>
-			{#each Object.keys(countryMap) as country}
-				<button id = "button-{country}" on:click={() => updateCountry(country)}> {countryMap[country]} </button>
-			{/each}
-		</div>
-		
+	<label class="selections">
+		Choose a country:
+		<button id = "button-all" class = "active" on:click={() => updateCountry('all')}> All Countries </button>
+		{#each Object.keys(countryMap) as country}
+			<button id = "button-{country}" on:click={() => updateCountry(country)}> {countryMap[country]} </button>
+		{/each}
+	</label>
+	
 
-		<h2 class={"current-country"}>Levels of income sufficiency for households in {countryToggle ? countryMap[curCountry] : 'all three countries'}</h2>
-		<!-- <div class={"current-country"}>
-			Viewing data for {countryToggle ? countryMap[curCountry] : 'all countries'}
-		</div> -->
+	<h2 class={"current-country"}>Levels of income sufficiency for households in {countryToggle ? countryMap[curCountry] : 'all three countries'}</h2>
 
 	<div>One <svg width={10} height={10}><circle r={3} cx={5} cy={5}></circle></svg>  represents 5 households</div>
 	<div class="visualization">
@@ -261,21 +258,10 @@
 		padding: 10px;
 	}
 
-	/* .income-header {
-		margin-left: 15em;
-	} */
 
 	.category {
 		font-weight: 600;
 		font-size: 0.9em;
-	}
-
-	.selections {
-		display:flex;
-		flex-direction:row;
-		justify-content:center;
-		gap: 1em;
-		padding: 10px;
 	}
 	
 	.current-country {
