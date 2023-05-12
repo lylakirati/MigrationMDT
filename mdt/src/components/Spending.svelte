@@ -27,6 +27,8 @@
     var legendsMinY = height - 20;
     var treemapRadius = 235; // 205
     var treemapCenter = [halfWidth, halfHeight - 20]; // halfHeight + 5
+    var tooptipBoxWidth = 180;
+    var tooptipBoxHeight = 90;
     //end: layout conf.
 
     //begin: treemap conf.
@@ -246,21 +248,57 @@
                     transform = "translate({-treemapRadius}, {-treemapRadius})"
                 >
                     {#each leaves as country}
-                        <path 
-                            class = "hoverer"
-                            d = "M{country.polygon.join(",")}z"
-                        >
-                            <title class = "hoverer-textbox">
-                                {country.data.name + "\nWith remittance: $" + 
-                                country.data.remitAmount.toFixed(2) +
-                                "\nWithout remittance: $" + 
-                                country.data.noRemitAmount.toFixed(2) +
-                                "\nDifference: " +
-                                (((country.data.remitAmount/country.data.noRemitAmount) - 1) * 100).toFixed(1) +
-                                "%"}
-                            </title>
-                        </path>
-                        
+
+                        <g class = "hoverer-cell">
+                            <path 
+                                class = "hoverer"
+                                d = "M{country.polygon.join(",")}z"
+                            >
+                                <!-- <title >
+                                    {country.data.name + "\nWith remittance: $" + 
+                                    country.data.remitAmount.toFixed(2) +
+                                    "\nWithout remittance: $" + 
+                                    country.data.noRemitAmount.toFixed(2) +
+                                    "\nDifference: " +
+                                    (((country.data.remitAmount/country.data.noRemitAmount) - 1) * 100).toFixed(1) +
+                                    "%"}
+                                </title> -->
+                            </path>
+                            <rect class = "hoverer-textbox hoverer-textbox-rect" 
+                                x = "{country.polygon.site.x}" 
+                                y = "{country.polygon.site.y}" 
+                                width="{tooptipBoxWidth}" 
+                                height="{tooptipBoxHeight}"/>
+                            <text 
+                                class = "hoverer-textbox hoverer-textbox-text hoverer-title" 
+                                x = "{country.polygon.site.x + tooptipBoxWidth / 18}" 
+                                y = "{country.polygon.site.y + tooptipBoxHeight / 5}" 
+                            >
+                                {country.data.name}
+                            </text>
+                            <text 
+                                class = "hoverer-textbox hoverer-textbox-text" 
+                                x = "{country.polygon.site.x + tooptipBoxWidth / 18 }" 
+                                y = "{country.polygon.site.y + tooptipBoxHeight / 5 * 2}"  
+                            >
+                                With remittance: ${country.data.remitAmount.toFixed(2)}
+                            </text>
+                            <text 
+                                class = "hoverer-textbox hoverer-textbox-text" 
+                                x = "{country.polygon.site.x + tooptipBoxWidth / 18 }" 
+                                y = "{country.polygon.site.y + tooptipBoxHeight / 5 * 3}"  
+                            >
+                                Without remittance: ${country.data.noRemitAmount.toFixed(2)}
+                            </text>
+                            <text 
+                                class = "hoverer-textbox hoverer-textbox-text" 
+                                x = "{country.polygon.site.x + tooptipBoxWidth / 18 }" 
+                                y = "{country.polygon.site.y + tooptipBoxHeight / 5 * 4}"  
+                            >
+                            Difference: +{(((country.data.remitAmount/country.data.noRemitAmount) - 1) * 100).toFixed(1)}%
+                            </text>
+                        </g>
+                    
                     {/each}
                 </g>
             </g>
@@ -387,9 +425,30 @@
         stroke-width: 0px;
     }
 
-
     .hoverer:hover{
         stroke-width: 4px;
+    }
+
+    .hoverer-textbox {
+        visibility: hidden;
+    }
+
+    .hoverer-cell:hover .hoverer-textbox {
+        visibility: visible;
+    }
+
+    .hoverer-textbox-rect {
+        fill: #FFFFFF;
+        fill-opacity: 0.85;
+    }
+
+    .hoverer-textbox-text {
+        font-family: 'Nunito', sans-serif;
+        font-size: 80%;
+    }
+
+    .hoverer-title {
+        font-weight: 600;
     }
 
     .legend-color {
