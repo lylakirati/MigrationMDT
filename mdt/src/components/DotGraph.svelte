@@ -337,7 +337,7 @@
 							Want To Emigrate
 						</text>
 					</g>
-				{:else if state === 4}
+				{:else if state === 4 || state === 5}
 					<g>
 						{#each order as category, i}
 							<text 

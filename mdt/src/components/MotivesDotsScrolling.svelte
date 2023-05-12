@@ -121,7 +121,12 @@
                 <p>
                     <b>Poverty, food insecurity, and lack of economic opportunities</b>
                     for sustainable livelihoods have 
-                    been cited as the top factors behind migration. More than <b>80 percent</b>
+                    been cited as the top factors behind migration.
+                </p>
+            </div>
+            <div class="step" data-step="5">
+                <p>
+                    More than <b>80 percent</b>
                     reported that they want to move abroad in search of 
                     <b>employment opportunities</b>. 
                     A large number of households also <b>lack money to secure food and other basic needs</b>, 
