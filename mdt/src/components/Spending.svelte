@@ -268,7 +268,7 @@
                                 x = "{country.polygon.site.x}" 
                                 y = "{country.polygon.site.y}" 
                                 width="{tooptipBoxWidth}" 
-                                height="{tooptipBoxHeight}"/>
+                                height="{tooptipBoxHeight - 8}"/>
                             <text 
                                 class = "hoverer-textbox hoverer-textbox-text hoverer-title" 
                                 x = "{country.polygon.site.x + tooptipBoxWidth / 18}" 
