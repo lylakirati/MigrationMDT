@@ -140,7 +140,7 @@
 
 	// overall chart width, height, and paddings
 	let chartWidth = 700; // 800
-	let chartHeight = 850; // 1000
+	let chartHeight = 1400; // 1000
 	const paddings = {
 		top: 25,
 		left: 25,
@@ -154,7 +154,7 @@
 	let columnWidth =
 		(chartWidth - paddings.right - paddings.left - 4 * paddingBetween) / numCategories;
 
-	const dotsPerRow = 15;
+	const dotsPerRow = 12; // 15
 
 	// set scaling variables
 	$: xScale = scaleLinear()
@@ -196,7 +196,7 @@
 						<text class={'category'} x={`${columnWidth / 2}`} y={'20'} text-anchor={'middle'}
 							>{incomeSufficiencyKeyMap[key]}</text
 						>
-						<text x={`${columnWidth / 2}`} y={'40'} text-anchor={'middle'}
+						<text x={`${columnWidth / 2}`} y={'40'} text-anchor={'middle'} font-size = 13px
 							>{incomeSufficiencyAmounts[key]}</text
 						>
 						<g>
@@ -205,7 +205,7 @@
 									cx={xScale(i % dotsPerRow)}
 									cy={yScale((i - (i % dotsPerRow)) / dotsPerRow)}
 									id={`dot-${i}`}
-									r={3}
+									r={4}
 									fill={colorScale(ind)}
 									transition:fade
 								/>
