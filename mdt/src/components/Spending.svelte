@@ -1,5 +1,9 @@
 <script>
     import * as d3 from 'd3';    
+    // import { seedrandom } from 'seedrandom';
+    // import {randomUniform} from 'd3-random';
+    import {randomLcg, randomNormal} from "d3-random";
+
     import { voronoiTreemap } from 'd3-voronoi-treemap';
     // import { gdp } from "../data/globalEconomyByGDP.json.js";
     import { remitExp } from "../data/avgSpendingForRemit.json.js";
@@ -9,32 +13,37 @@
     const _2PI = 2 * Math.PI;
     // const geometric = require("geometric"); // for rescale polygon
     //end: constants
+
+    export let state = 0;
     
     //begin: layout conf.
-    var svgWidth = 850;
-    var svgHeight = 500;
-    var margin = {top: 10, right: 10, bottom: 10, left: 10};
+    var svgWidth = 700; //850
+    var svgHeight = 550; //500
+    var margin = {top: 5, right: 5, bottom: 10, left: 5};
     var height = svgHeight - margin.top - margin.bottom;
     var width = svgWidth - margin.left - margin.right;
     var halfWidth = width / 2;
     var halfHeight = height / 2;
-    var quarterWidth = width / 4;
-    var quarterHeight = height / 4;
-    var titleY = 20;
     var legendsMinY = height - 20;
-    var treemapRadius = 205;
-    var treemapCenter = [halfWidth, halfHeight + 5];
+    var treemapRadius = 235; // 205
+    var treemapCenter = [halfWidth, halfHeight - 20]; // halfHeight + 5
+    var tooptipBoxWidth = 180;
+    var tooptipBoxHeight = 90;
     //end: layout conf.
 
     //begin: treemap conf.
     var _voronoiTreemap = voronoiTreemap();
     var hierarchy, circlingPolygon;
+    const seed = 0.58971573888282423; // any number in [0, 1)
+    // 0.44871573888282423, 0.58871573888282423
+    const random_seeds = randomNormal.source(randomLcg(seed))(0, 1);
+    _voronoiTreemap.prng(random_seeds);
     //end: treemap conf.
     
     //begin: drawing conf.
     var fontScale = d3.scaleLinear()
         .domain([3, 20])
-        .range([8, 20])
+        .range([10, 20]) // 8 20
         .clamp(true);
     //end: drawing conf.
 
@@ -64,9 +73,9 @@
     leaves = hierarchy.leaves();
    
     let showNoRemitStatus = 0;
-    function showNoRemit() {
+    function showNoRemit(value) {
         // let something;
-        if (showNoRemitStatus === 0) {
+        if (value === 1 && showNoRemitStatus === 0) {
             d3.selectAll('.cell-remit')
                 .data(leaves)
                 .transition()
@@ -87,11 +96,15 @@
                     }
                 )
                 .end();
-                
-            // d3.select(".button")
-            //     .style("background-color", "#264561")
+
+            d3.selectAll("#button-remit")
+			    .classed("active", false);
+
+            d3.select("#button-no-remit")
+                .classed("active", true);
+    
             showNoRemitStatus = 1;
-        } else {
+        } else if (value === 0 && showNoRemitStatus === 1) {
             d3.selectAll('.cell-remit')
                 .data(leaves)
                 .transition()
@@ -101,8 +114,11 @@
                     return "M"+ d.polygon.join(",")+"z"; 
                 });
 
-            d3.select(".button")
-                .style("background-color", "#7A8B9A");
+            d3.selectAll("#button-remit")
+			    .classed("active", true);
+
+            d3.select("#button-no-remit")
+                .classed("active", false);
 
             d3.selectAll(".value")
                 .data(leaves)
@@ -116,21 +132,41 @@
                 )
                 .end();
 
-
-    
             showNoRemitStatus = 0;
         }
-        
-
     };
+
+    function transition() {
+        console.log("Current state", state);
+        switch(state) {
+            case 0: 
+                showNoRemit(0);
+                break;
+            case 3: 
+                showNoRemit(1);
+                break;
+            case 4: 
+                showNoRemit(1);
+                break;
+            default:
+                showNoRemit(0);
+                break;
+
+        }
+    }
+
+    $: state, transition();
 
 </script>
 
 
 <main>
-    <label>
-        <button
-            class = "button"
+    <label class="selections">
+        Choose household type:
+        <button id = "button-remit" class = "button active" on:click={() => showNoRemit(0)}> With Remittance Support </button>
+        <button id = "button-no-remit" class = "button" on:click={() => showNoRemit(1)}> Without Remittance Support </button>
+        <!-- <button
+            class = "button active"
             aria-label = "Show no remit"
             on:click={() => showNoRemit()}
         >
@@ -139,8 +175,10 @@
         {:else}
             Show With Remittances
         {/if}
-        </button>
+        </button> -->
     </label>
+
+    <h2 class="title">Average monthly expenditure of households who {showNoRemitStatus == 0 ? "receive remittance support" : "do not have remittance support"}</h2>
     
     <svg 
         width={svgWidth} 
@@ -210,28 +248,62 @@
                     transform = "translate({-treemapRadius}, {-treemapRadius})"
                 >
                     {#each leaves as country}
-                        <path 
-                            class = "hoverer"
-                            d = "M{country.polygon.join(",")}z"
-                        >
-                            <title>
-                                {country.data.name + "\n" + country.value + "%"}
-                            </title>
-                        </path>
-                        
+
+                        <g class = "hoverer-cell">
+                            <path 
+                                class = "hoverer"
+                                d = "M{country.polygon.join(",")}z"
+                            >
+                                <!-- <title >
+                                    {country.data.name + "\nWith remittance: $" + 
+                                    country.data.remitAmount.toFixed(2) +
+                                    "\nWithout remittance: $" + 
+                                    country.data.noRemitAmount.toFixed(2) +
+                                    "\nDifference: " +
+                                    (((country.data.remitAmount/country.data.noRemitAmount) - 1) * 100).toFixed(1) +
+                                    "%"}
+                                </title> -->
+                            </path>
+                            <rect class = "hoverer-textbox hoverer-textbox-rect" 
+                                x = "{country.polygon.site.x}" 
+                                y = "{country.polygon.site.y}" 
+                                width="{tooptipBoxWidth}" 
+                                height="{tooptipBoxHeight - 8}"/>
+                            <text 
+                                class = "hoverer-textbox hoverer-textbox-text hoverer-title" 
+                                x = "{country.polygon.site.x + tooptipBoxWidth / 18}" 
+                                y = "{country.polygon.site.y + tooptipBoxHeight / 5}" 
+                            >
+                                {country.data.name}
+                            </text>
+                            <text 
+                                class = "hoverer-textbox hoverer-textbox-text" 
+                                x = "{country.polygon.site.x + tooptipBoxWidth / 18 }" 
+                                y = "{country.polygon.site.y + tooptipBoxHeight / 5 * 2}"  
+                            >
+                                With remittance: ${country.data.remitAmount.toFixed(2)}
+                            </text>
+                            <text 
+                                class = "hoverer-textbox hoverer-textbox-text" 
+                                x = "{country.polygon.site.x + tooptipBoxWidth / 18 }" 
+                                y = "{country.polygon.site.y + tooptipBoxHeight / 5 * 3}"  
+                            >
+                                Without remittance: ${country.data.noRemitAmount.toFixed(2)}
+                            </text>
+                            <text 
+                                class = "hoverer-textbox hoverer-textbox-text" 
+                                x = "{country.polygon.site.x + tooptipBoxWidth / 18 }" 
+                                y = "{country.polygon.site.y + tooptipBoxHeight / 5 * 4}"  
+                            >
+                            Difference: +{(((country.data.remitAmount/country.data.noRemitAmount) - 1) * 100).toFixed(1)}%
+                            </text>
+                        </g>
+                    
                     {/each}
                 </g>
             </g>
         </g>
-
-
-        <text 
-            id = "title" 
-            transform = "translate({halfWidth}, {titleY})"
-            text-anchor = "middle"
-        >
-            Household Expenditures by Categories
-        </text>
+<!-- 
 
         <text 
             class = "tiny light" 
@@ -255,7 +327,7 @@
             text-anchor = "end"
         >
             Footnote 3
-        </text>
+        </text> -->
 
         <g
             class = "legend"
@@ -285,6 +357,7 @@
             {/each}
             <text
                 transform = "translate(0, {-continents.length * (legendHeight + interLegend) - 5})"
+                font-weight = 300
             >
                 Categories
             </text>
@@ -304,15 +377,11 @@
         flex-direction:column;
         align-items:center;
     }
+    
     svg {
         /* background-color: rgb(250,250,250); */
     }
     
-    #title {
-        letter-spacing: 4px;
-        font-weight: 700;
-        font-size: x-large;
-    }
 
     text.tiny {
         font-size: 10pt;
@@ -353,11 +422,33 @@
     .hoverer {
         fill: transparent;
         stroke: white;
-        stroke-width:0px;
+        stroke-width: 0px;
     }
-    
-    .hoverer:hover {
-        stroke-width: 3px;
+
+    .hoverer:hover{
+        stroke-width: 4px;
+    }
+
+    .hoverer-textbox {
+        visibility: hidden;
+    }
+
+    .hoverer-cell:hover .hoverer-textbox {
+        visibility: visible;
+    }
+
+    .hoverer-textbox-rect {
+        fill: #FFFFFF;
+        fill-opacity: 0.85;
+    }
+
+    .hoverer-textbox-text {
+        font-family: 'Nunito', sans-serif;
+        font-size: 80%;
+    }
+
+    .hoverer-title {
+        font-weight: 600;
     }
 
     .legend-color {
@@ -365,16 +456,5 @@
         stroke:darkgrey;
     }
 
-    .button {
-        background-color: #7A8B9A;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-    }
-    
 
 </style>

@@ -90,11 +90,8 @@
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                The fact that the top five reasons for migrating externally are related to finances and money 
-                is also reflected in the economic conditions of the people that were surveyed. Overall,
-                the most amount of people indicated their current income levels were insufficient. 
+                Roughly 35% of the Central Americans barely have enough money to feed their families.
             </p>
-            
         </div>
         <div class="step" data-step="2">
             <p>
@@ -143,6 +140,18 @@
         max-width: 20rem;
     }
     
+    /* article {
+        position: relative;
+        padding: 20 5rem;
+        max-width: 50rem;
+        right: 22rem;
+    } */
+    
+    /* article p {
+        background-color: #FFFFFF;
+        padding: 10 5rem;
+        box-shadow: 3px 3px 3px #BEBEBE;
+    } */
 
     figure {
         position: -webkit-sticky;
@@ -173,5 +182,12 @@
         font-weight: 900;
         /* color: #fff; */
     }
+
+    .step {
+        text-align:left;
+        margin: 0 auto 2rem auto;
+        border-left: 2px solid var(--primary-color);
+    }
+
 
 </style>

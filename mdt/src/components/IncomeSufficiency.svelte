@@ -107,24 +107,40 @@
 	
 	// update country, as well as makes it so that the button that was pressed is toggled
 	function updateCountry(country) {
+		// var selectBox = document.getElementById("select-country");
+		// var selectedCountry = selectBox.options[selectBox.selectedIndex].value;
+		// alert(selectedValue);
 		if (country === 'all' || (country === curCountry && countryToggle)) {
 			// if equal and country active, reset
 			updateData(data);
 			countryToggle = false;
 			curCountry = '';
+
+			d3.selectAll("button")
+				.classed("active", false);
+
+			d3.select("#button-all")
+				.classed("active", true);
+
 			return;
 		}
+
+		d3.selectAll("button")
+			.classed("active", false);
+
+		d3.select("#button-" + country)
+			.classed("active", true);
+		
 		countryToggle = true;
 		curCountry = country;
 		updateData(data.filter((d) => d.country === country));
-		
 	}
 	
 
 
 	// overall chart width, height, and paddings
-	let chartWidth = 800;
-	let chartHeight = 1000;
+	let chartWidth = 700; // 800
+	let chartHeight = 1400; // 1000
 	const paddings = {
 		top: 25,
 		left: 25,
@@ -138,7 +154,7 @@
 	let columnWidth =
 		(chartWidth - paddings.right - paddings.left - 4 * paddingBetween) / numCategories;
 
-	const dotsPerRow = 15;
+	const dotsPerRow = 12; // 15
 
 	// set scaling variables
 	$: xScale = scaleLinear()
@@ -156,17 +172,19 @@
 </script>
 
 <main>
-	<h2>Levels of Income Sufficiency</h2>
-	<div class={"selections"}>
+	
+	<label class="selections">
+		Choose a country:
+		<button id = "button-all" class = "active" on:click={() => updateCountry('all')}> All Countries </button>
 		{#each Object.keys(countryMap) as country}
-			<button on:click={() => updateCountry(country)}> {countryMap[country]} </button>
+			<button id = "button-{country}" on:click={() => updateCountry(country)}> {countryMap[country]} </button>
 		{/each}
-		<button on:click={() => updateCountry('all')}> All Countries </button>
-	</div>
-	<div class={"current-country"}>
-		Viewing data for {countryToggle ? countryMap[curCountry] : 'all countries'}
-	</div>
-	<div>One <svg width={10} height={10}><circle r={3} cx={5} cy={5}></circle></svg>  represents 5 people</div>
+	</label>
+	
+
+	<h2 class={"current-country"}>Levels of income sufficiency for households in {countryToggle ? countryMap[curCountry] : 'all three countries'}</h2>
+
+	<div>One <svg width={10} height={10}><circle r={3} cx={5} cy={5}></circle></svg>  represents 5 households</div>
 	<div class="visualization">
 		{#if data.length > 1}
 			<svg width={chartWidth} height={chartHeight}>
@@ -178,7 +196,7 @@
 						<text class={'category'} x={`${columnWidth / 2}`} y={'20'} text-anchor={'middle'}
 							>{incomeSufficiencyKeyMap[key]}</text
 						>
-						<text x={`${columnWidth / 2}`} y={'40'} text-anchor={'middle'}
+						<text x={`${columnWidth / 2}`} y={'40'} text-anchor={'middle'} font-size = 13px
 							>{incomeSufficiencyAmounts[key]}</text
 						>
 						<g>
@@ -187,7 +205,7 @@
 									cx={xScale(i % dotsPerRow)}
 									cy={yScale((i - (i % dotsPerRow)) / dotsPerRow)}
 									id={`dot-${i}`}
-									r={3}
+									r={4}
 									fill={colorScale(ind)}
 									transition:fade
 								/>
@@ -201,6 +219,7 @@
 		{/if}
 	</div>
 </main>
+
 
 <style>
 	main {
@@ -239,21 +258,19 @@
 		padding: 10px;
 	}
 
+
 	.category {
 		font-weight: 600;
+		font-size: 0.9em;
 	}
-
-	.selections {
-		display:flex;
-		flex-direction:row;
-		justify-content:center;
-		gap: 1em;
-	}
+	
 	.current-country {
 		padding: .5em;
 	}
+
 	.visualization {
 		padding:1em;
 	}
+
 
 </style>

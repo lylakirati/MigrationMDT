@@ -10,26 +10,26 @@
 
 <section id="title">
     <h1>What do Central Americans run away from?</h1> 
-    <p class='authors'>Grace Huang, Lyla Kiratiwudhikul, Nerine Uyanik</p>
-    <p>(Draft 0.01)</p>
-    <p>
+    <p class='authors'>By Grace Huang, Lyla Kiratiwudhikul, and Nerine Uyanik</p>
+    <p>(Draft 1.01)</p>
+    <!-- <p>
         As a note to reviewers/current viewers, since this is an MVP, there are still things that haven't been finalized yet.
         Particularly, the writing has not been completed yet and we have not finished implementing responsive generation of monetary 
         data for the final visualization. However, what's currently there should hopefully provide an idea of what our final 
         product will look like. We plan to build upon both of these items for the final version,
         as well as fixing up styling to make things more cohesive.
-    </p>
+    </p> -->
 </section>
 <main>
     <section id="intro">
         <p>
             More than 3.8 million people from Central America have migrated to and lived in the United States as of 2019. <a href="https://www.migrationpolicy.org/article/central-american-immigrants-united-states#:~:text=The%20Central%20American%20diaspora%20is,with%20Honduran%20ancestry%20or%20origin">[1]</a>
             Immigrants from the Northern Triangle countries (El Salvador, Guatemala, and Honduras) take up over 86% of the number. 
-            Still, these numbers do not include irregular (unauthorized) immigrants and those who were stopped at the U.S-Mexico border and deported. 
+            Still, these numbers do not include immigrants from irregular channels or people who were stopped at the U.S-Mexico border and deported. 
         </p>
         <p>
-            People from these countries embark on a hope-filled journey to find a better life for themselves or for the families they leave behind. 
-            However, the routes they take are dangerous and life-threatening, from ​​treacherous terrain to violence such as robbery and sexual assault. 
+            People from these three countries embark on a hope-filled journey to find a better life for themselves or for the families they leave behind. 
+            However, the routes they take are often dangerous and life-threatening, from ​​treacherous terrain to violence such as robbery and sexual assault. 
         </p>
 
         <b>So what has driven them to leave their home countries and risk the perilous passage to the U.S.? </b>
@@ -74,15 +74,23 @@
 		line-height: 1.5;
 		/* font-size: 12px; */
 		color: var(--main-color-text);
-        margin:0 5em;
+        margin:0 10em;
 	}
 
     :global(button)  {
-    font-family: 'Nunito', sans-serif;
-    border: 1px solid black;
-    padding: 5px 10px;
-    border-radius: 1em;
-    background: var(--button-background);
+        font-family: 'Nunito', sans-serif;
+        border: 1px solid black;
+        padding: 5px 10px;
+        border-radius: 1em;
+        background: var(--button-background);
+    }
+
+    :global(button.active)  {
+        /* filter: brightness(75%); */
+        background: #ecac15;
+        border: 2px solid black;
+        box-shadow: 3px 3px 3px #BEBEBE;
+        /* color: #FFFFFF; */
     }
 
     :global(button:hover) {
@@ -93,8 +101,13 @@
         font-family: 'Nunito', sans-serif;
     }
 
+    :global(h2) {
+        font-family: 'Nunito', sans-serif;
+        font-size: 1.1em;
+    }
+
     #title {
-        padding:5em 15em;
+        padding:2em 25em;
         background: var(--primary-color);
         color: var(--secondary-color-text);
         /* text-align:center; */
@@ -102,16 +115,19 @@
     }
 
     #title h1 {
-        text-align:center;
+        /* margin:0 10em; */
+        font-size: 50px;
+        text-align: left;
     }
 
     #title .authors {
-        text-align:center;
+        text-align: left;
     }
 
     #intro {
         padding: 2em 15em;
     }
+
     h1 {
         font-weight: 700;
         font-size: 70px;
@@ -127,12 +143,13 @@
         justify-content:center;
         text-align:left;
         margin: 0 auto 2rem auto;
-        border-left: 2px solid var(--primary-color);
+        border-left: 2px;
+        /* border-left: 2px solid var(--primary-color); */
     }
 
 
     :global(.step:last-child) {
-        margin-bottom: 0;
+        margin-bottom: 20em;
     }
 
     /* :global(.step.is-active ){
@@ -143,5 +160,14 @@
     :global(.step p) {
         padding: 1rem;
     }
+
+    :global(.selections) {
+		/* display:flex; */
+        display:inline-flex;
+		flex-direction:row;
+		justify-content:center;
+		gap: 1em;
+		padding: 10px;
+	}
 
 </style>
