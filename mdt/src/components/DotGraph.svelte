@@ -40,7 +40,7 @@
 	let wantsMigrateCounter = 0;
 	
 	// set general use variables
-	export let chartWidth = 850;
+	export let chartWidth = 800;
 	let chartHeight = 600;
 	let toggle = false;
 	export let state = 0; // state of the visualization
@@ -157,12 +157,17 @@
 					)
 					.attr('cy', (d) => yScale(d['ind-2'], dotsPerRow/2))
             		.attr("r", 3)
+					.attr("opacity", 1)
 					.attr("fill", (d) => colorScale(d['mig_ext_intention']))
 				break;
 			case 3: // third case: only look at people who want to migrate by removing all people who don't want to migrate
 				svg
 					.selectAll('circle')
 					.filter((d) => d['mig_ext_intention'] !== 1)
+					.transition()
+					.duration(550)
+					.ease(d3.easeQuadInOut)
+					.attr("opacity", 0)
 					.remove()
 
 				// svg
@@ -199,6 +204,7 @@
 					.attr("cx", (d, i) => xScaleCategories(d.categoryIndex, d.category))
             		.attr("cy", (d, i) => yScaleCategories(d.categoryIndex, d.category))
 					.attr("fill", (d) => colorScaleCategories(d.category))
+					.attr("opacity", 1)
 				break;
 			default:
 				break;
@@ -244,42 +250,6 @@
 		// TODO: populate dataByMotivation to look at the top 5 reasons for migrating
 
 		});
-//     // hover effect
-//   const idContainer = "svg-container-" + Math.random() * 1000000;
-//   let mousePosition = { x: null, y: null };
-//   let pageMousePosition = { x: null, y: null };
-//   let currentHoveredPoint = null;
-
-//   function followMouse(event) {
-//     const svg = document.getElementById(idContainer);
-//     if (svg === null) return;
-//     const dim = svg.getBoundingClientRect();
-//     pageMousePosition = {
-//       x: event.pageX,
-//       y: event.pageY,
-//     };
-//     const positionInSVG = {
-//       x: event.clientX - dim.left,
-//       y: event.clientY - dim.top,
-//     };
-//     mousePosition =
-//       positionInSVG.x > paddings.left &&
-//       positionInSVG.x < chartWidth - paddings.right &&
-//       positionInSVG.y > paddings.top &&
-//       positionInSVG.y < chartHeight - paddings.bottom
-//         ? { x: positionInSVG.x, y: positionInSVG.y }
-//         : { x: null, y: null };
-//     computeSelectedXYValue(mousePosition.x, mousePosition.y);
-//   }
-//   function removePointer() {
-//     mousePosition = { x: null, y: null };
-//   }
-//     function computeSelectedXYValue(xVal, yVal) {
-//         currentHoveredPoint =
-//             data.filter((d, i) => xScale(i % dotsPerRow) >= xVal && yScale((i - i % dotsPerRow)/dotsPerRow) >= yVal)[0];
-//         console.log(xVal, yVal, currentHoveredPoint);
-//         return null;
-//     }
 </script>
 
 <section>
@@ -291,7 +261,7 @@
 	{:else}
 		<h2>Unsorted Migration</h2>
 	{/if} -->
-	<div class="visualization">
+	<div class="visualization" >
 		<!-- {#if state === 1}
 			<div class="headers">
 				<div>Want To Migrate (Externally)</div>
@@ -350,17 +320,6 @@
 					</g>
 				{/if}
 			</svg>
-			<!-- <div
-                class={mousePosition.x === null
-                    ? "tooltip-hidden"
-                    : "tooltip-visible"}
-                style="left: {pageMousePosition.x +
-                    10}px; top: {pageMousePosition.y + 10}px"
-            >
-                {#if mousePosition.x !== null}
-                    Migration Motives: {currentHoveredPoint['mig_ext_pref_motivo']}.
-                {/if}
-            </div> -->
 	</div>
 </section>
 
@@ -399,5 +358,13 @@
     color: black;
     position: absolute;
     padding: 10px;
+  }
+
+  section {
+	padding:0;
+  }
+
+  .visualization {
+	text-align:center;
   }
 </style>

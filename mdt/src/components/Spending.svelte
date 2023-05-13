@@ -17,7 +17,8 @@
     export let state = 0;
     
     //begin: layout conf.
-    var svgWidth = 700; //850
+    
+    var svgWidth = 720; //850
     var svgHeight = 550; //500
     var margin = {top: 5, right: 5, bottom: 10, left: 5};
     var height = svgHeight - margin.top - margin.bottom;
@@ -455,6 +456,4 @@
         stroke-width: 1px;
         stroke:darkgrey;
     }
-
-
 </style>

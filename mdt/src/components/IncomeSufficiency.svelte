@@ -139,22 +139,22 @@
 
 
 	// overall chart width, height, and paddings
-	let chartWidth = 700; // 800
+	let chartWidth = 720; // 800
 	let chartHeight = 1400; // 1000
 	const paddings = {
 		top: 25,
-		left: 25,
-		right: 25,
+		left: 20,
+		right: 20,
 		bottom: 50
 	};
-	const paddingBetween = 25; // padding between each column
+	const paddingBetween = 15; // padding between each column
 
 	// individual column width
 	let numCategories = 5;
 	let columnWidth =
 		(chartWidth - paddings.right - paddings.left - 4 * paddingBetween) / numCategories;
 
-	const dotsPerRow = 12; // 15
+	const dotsPerRow = 20; // 15
 
 	// set scaling variables
 	$: xScale = scaleLinear()
@@ -205,7 +205,7 @@
 									cx={xScale(i % dotsPerRow)}
 									cy={yScale((i - (i % dotsPerRow)) / dotsPerRow)}
 									id={`dot-${i}`}
-									r={4}
+									r={3}
 									fill={colorScale(ind)}
 									transition:fade
 								/>

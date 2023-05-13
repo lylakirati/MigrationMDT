@@ -13,22 +13,22 @@
 
     let index = 0;
 
-    let figureWidth = 600; // responsive, potentially for the future
+    let figureWidth = 800; // responsive, potentially for the future
     // initialize the scrollama
     let scroller = scrollama();
 
     // generic window resize listener event
     function handleResize() {
         // 1. update height of step elements
-        var stepH = Math.floor(window.innerHeight * 0.75);
+        var stepH = Math.floor(window.innerHeight);
         step.style("height", stepH + "px");
 
         var figureHeight = window.innerHeight - 200;
         var figureMarginTop = (window.innerHeight - figureHeight) / 2;
-
         figure
             .style("height", figureHeight + "px")
-            .style("top", figureMarginTop + "px");
+            .style("top", figureMarginTop + "px")
+            // .style("left", (window.innerWidth - figureWidth)/2 +"px");
 
         // 3. tell scrollama to update new element dimensions
         scroller.resize();
@@ -57,9 +57,6 @@
 		figure = scrolly.select("figure");
 	    article = scrolly.select("article");
     	step = article.selectAll(".step");
-
-        console.log(step);
-
         // 1. force a resize on load to ensure proper dimensions are sent to scrollama
         
         handleResize();
@@ -85,8 +82,8 @@
 
     <section id="scrolly" bind:this={scrolly}>
             
-        <figure class="migration-motives">
-            <DotGraph state={index}/>
+        <figure class="migration-motives" >
+            <DotGraph bind:chartWidth={figureWidth} state={index}/>
             
         </figure>
         
@@ -145,6 +142,9 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
         /* background-color: #f3f3f3; */
         padding: 1rem;
     }
@@ -162,8 +162,8 @@
     article {
         position: relative;
         padding: 20 5rem;
-        max-width: 50rem;
-        right: 22rem;
+        max-width: 30rem;
+        /* right: 22rem; */
     }
     
     article p {
@@ -175,9 +175,9 @@
     figure {
         position: -webkit-sticky;
         position: sticky;
-        width: 50%;
+        width: 80%;
         height: 80vh;
-        margin-left: 6em;
+        /* margin-left: 6em; */
         -webkit-transform: translate3d(0, 0, 0);
         -moz-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
@@ -202,6 +202,10 @@
     figure.is-focused {
         position: -webkit-sticky;
         position: sticky;
+    }
+
+    .step:last-child {
+        margin-bottom: 40em;
     }
 
 </style>
