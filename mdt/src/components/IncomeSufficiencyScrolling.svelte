@@ -90,12 +90,12 @@
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                Roughly 35% of the Central Americans barely have enough money to feed their families.
+                Roughly <b>35%</b> of the Central Americans <b>barely have enough money to feed their families</b>.
             </p>
         </div>
         <div class="step" data-step="2">
             <p>
-                To Be Expanded Upon
+                Migrating to find a job in another country can allow Central Americans to earn higher wage and send money home to aid their families.
             </p>
         </div>
         <!-- <div class="step" data-step="3">

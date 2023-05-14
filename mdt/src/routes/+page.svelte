@@ -24,7 +24,7 @@
     </p> -->
 </section>
 <main>
-    <section id="intro">
+    <section id="intro" class = "paragraph-text">
         <p>
             More than 3.8 million people from Central America have migrated to and lived in the United States as of 2019. <a href="https://www.migrationpolicy.org/article/central-american-immigrants-united-states#:~:text=The%20Central%20American%20diaspora%20is,with%20Honduran%20ancestry%20or%20origin">[1]</a>
             Immigrants from the Northern Triangle countries (El Salvador, Guatemala, and Honduras) take up over 86% of the number. 
@@ -43,6 +43,11 @@
     <section>
         <IncomeSufficiencyScrolling />
     </section>
+    <!-- <section class = "paragraph-text">
+        <p>
+            Migrating to find a job in another country can allow Central Americans to earn higher wage and send money home to aid their families.
+        </p>
+    </section> -->
     <section>
         <RemitScrolling />
     </section>
@@ -126,6 +131,10 @@
     #intro {
         padding: 2em 15em;
     }
+
+    /* .paragraph-text {
+        padding: 2em 15em;
+    } */
 
     h1 {
         font-weight: 700;

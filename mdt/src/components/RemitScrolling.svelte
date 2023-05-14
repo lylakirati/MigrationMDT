@@ -96,7 +96,11 @@
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                Migrating to find a job in another country can allow Central Americans to earn higher wage and send money home to aid their families.
+                <b>Twelve percent</b>
+                of the households indicate that they <b>receive financial support from abroad at least once a month</b>.
+            </p>
+            <p>
+                The amount of the remittances is <b>US$152 on average and can go up to US$1,000 per shipment</b>.
             </p>
         </div>
         <div class="step" data-step="2">
@@ -107,15 +111,15 @@
         </div>
         <div class="step" data-step="3">
             <p>
-                Unlike the U.S. where housing is relatively expensive, over 35% of Central American households'
-                monthly expenditure is for securing food and drinking water.
+                Unlike the U.S. where housing is relatively expensive, <b>over 35%</b> of Central American households'
+                monthly expenditure is <b>for securing food and drinking water</b>.
             </p>
         </div>
         <div class="step" data-step="4">
             <p>
-                Compare these numbers to the spendings of households who have no financial support from abroad.
-                Their spendings in every category drop up to 70%. In particular, they have much less to spend on
-                food, healthcare, and housing. 
+                Compare these numbers to the spendings of households who have <b>no financial support from abroad</b>.
+                Their spendings in every category drop up to 70%. In particular, <b>they have much less to spend on
+                food, healthcare, and housing</b>. 
             </p>
         </div>
         <div class="step" data-step="5">
@@ -162,7 +166,6 @@
         padding: 0 1rem;
         max-width: 20rem;
     }
-    
 
     figure {
         position: -webkit-sticky;
