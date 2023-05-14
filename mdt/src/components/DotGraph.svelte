@@ -1,7 +1,7 @@
 <script>
 	import { scaleLinear, scaleOrdinal } from 'd3-scale';
 	import * as d3 from 'd3';
-
+	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
 	let data = [];
@@ -66,7 +66,7 @@
 	// 	.range([paddings.top, chartHeight - paddings.bottom]);
     $: colorScale = scaleOrdinal()
 		.domain([0, 1])
-		.range(['#000', '#65BABD']);
+		.range(['#EFA051', '#1C52A3']);
 
 	// for separating into different types of migration
 	$: xScale2 = scaleLinear()
@@ -144,7 +144,7 @@
 					.attr("opacity", 1)
             		.attr("fill", (d) => colorScale(d['mig_ext_intention']))
 				break;
-			case 2: // second case: split data into people who want to migrate and people who don't want to migrate
+			case 2: // second state: split data into people who want to migrate and people who don't want to migrate
 				svg
 					.selectAll('circle')
 					.data(data)
@@ -184,7 +184,7 @@
 					.data(data.filter(d => d['mig_ext_intention'] === 1))
 					.join('circle')
 					.transition()
-					.delay(350)
+					.delay(550)
 					.duration(550)
 					.ease(d3.easeQuadInOut)
 					.attr("cx", (d, i) => xScale(d['ind-2'] % dotsPerRow))
@@ -193,7 +193,8 @@
 					.attr("fill", (d) => colorScale(d['mig_ext_intention']))
 
 				break;
-			case 4: // fourth case: Separate into different categories based on migration motivation
+			case 4: 
+			case 5: // fourth + fifth case: Separate into different categories based on migration motivation
 				svg
 					.selectAll('circle')
 					.data(dataWithCategories)
@@ -218,7 +219,12 @@
 		data = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/mdt/src/data/main_cleaned.csv");
 
 
-		data = data.filter((d) => +d['mig_ext_intention'] !== 99);
+		data = data.filter((d) => +d['mig_ext_intention'] !== 99)
+				.map((d) => ({
+					mig_ext_intention: +d['mig_ext_intention'],
+					mig_ext_pref_motivo: d['mig_ext_pref_motivo']
+				})); // take subset of data for better performance
+
 		for (let d of data) {
 			d['mig_ext_intention'] = +d['mig_ext_intention'];
 			if (d['mig_ext_intention'] === 0) {
@@ -235,14 +241,14 @@
 					if(motivations.includes(motivation)){
 						let curArray = dataByMotivation[motivationResponses[motivation]];
 						// todo: refactor to make this more efficient
-						dataWithCategories.push({category: motivation, data: d, categoryIndex: curArray.length})
+						dataWithCategories.push({category: motivation, data: {mig_ext_intention: d['mig_ext_intention'], mig_ext_pref_motivo: d['mig_ext_pref_motivo']}, categoryIndex: curArray.length})
 						curArray.push(d); // add to relevant data points
 					}
 					
 				}
 			}
 		}
-		state = 0;
+		
 		transition();
 
 		// console.log(doesNotWantMigrateCounter);
@@ -282,33 +288,33 @@
 					{/if}
 				{/each} -->
 				{#if state === 2}
-					<g>
+					<g transition:fade>
 						<text 
-							x={columnWidth * 1 / 2 + 100}
+							x={(chartWidth/2 - padding_between + paddings.left)/2}
 							y={((0 - 0 % 2 )/2) * 300 + 15}
 							text-anchor={'middle'}
 						>
-							Want To Emigrate
+							Wants To Emigrate
 						</text>
 						<text 
-							x={columnWidth * 2 / 2 + 80 * 4 + 60}
+							x={(chartWidth * 3/2 - padding_between + paddings.right)/2}
 							y={((1 - 1 %2)/2) * 300 + 15}
 							text-anchor={'middle'}>
-							Do NOT Want To Emigrate
+							Does NOT Want To Emigrate
 						</text>
 					</g>
 				{:else if state === 3}
-					<g>
+					<g transition:fade>
 						<text 
-							x={columnWidth * 1 / 2 + 100}
+							x={chartWidth/2}
 							y={((0 - 0 % 2 )/2) * 300 + 15}
 							text-anchor={'middle'}
 						>
-							Want To Emigrate
+							Wants To Emigrate
 						</text>
 					</g>
 				{:else if state === 4 || state === 5}
-					<g>
+					<g transition:fade>
 						{#each order as category, i}
 							<text 
 								x={columnWidth * (2 *(i % 3) + 1)/2 + paddings.left + padding_between * (i % 3 - 1)}

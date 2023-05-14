@@ -26,17 +26,23 @@
         GT: {
             avgIncomeUSD: 42.97,
             currency: "Quetzals",
-            exchangeRate:0.13
+            exchangeRate: 0.13,
+            percentRemittances: 0.217,
+            avgRemittancesUSD: 32.980706
         },
         HND: {
             avgIncomeUSD: 17.21,
             currency: "Lempira",
-            exchangeRate:0.041
+            exchangeRate: 0.041,
+            percentRemittances: 0.289,
+            avgRemittancesUSD: 22.508679
         },
         SLV: {
             avgIncomeUSD: 276.61,
             currency: "Dollars",
-            exchangeRate: 1
+            exchangeRate: 1,
+            percentRemittances: 0.363,
+            avgRemittancesUSD: 51.674749
         }
     };
 
@@ -47,7 +53,6 @@
 			zipCodeData[d.zip] = d; // create map
 		}
 
-        console.log(zipCodeData['95070']);
         loaded = true;
 	});
 
@@ -68,25 +73,31 @@
                 country = value;
             }
 		}
-        console.log(userZipCode);
+        // console.log(userZipCode);
         userZipCodeInfo = zipCodeData[userZipCode]; // TODO: assumes valid zip code for now, fix later
         avgIncomeUSD = countryInfo[country].avgIncomeUSD;
         currency = countryInfo[country].currency;
         exchangeRate = countryInfo[country].exchangeRate;
         formSubmitted = true;
+        window.scrollBy({
+            top: 500,
+            left:0,
+            behavior: 'smooth'
+        });
 	}
 
     $: multiplier = 1;
-    console.log(multiplier);
+    
     $: budgetAllowance = Math.floor(400 * multiplier); // calculate this logic later
     let allocation = {
         food: 0,
         housing: 0,
         utilities: 0, 
-        communication: 0
+        communication: 0,
+        transportation: 0,
+        education: 0,
         // not implemented for now:
-        // communication: 0,
-        // transportation: 0,
+        
         // hygieneHousehold: 0,
         // miscExpenses: 0,
         // healthCareMedical: 0,
@@ -133,6 +144,11 @@
     }
     function submitInitial() {
         initialSubmitted = true;
+        window.scrollBy({
+            top: 400,
+            left:0,
+            behavior: 'smooth'
+        })
     }
 
    
@@ -142,31 +158,36 @@
     {#if loaded}
     <form on:submit|preventDefault={handleSubmit}>
         <!-- <input id="country" name="country" type="text"> -->
-        <label for="zip">Please Input Your Zip Code:</label>
-        <input id="zip" name="zip" type="text" pattern="[0-9]*" required maxLength=5>
+        <div>
+            <label for="zip">Please Input Your Zip Code:</label>
+            <input id="zip" name="zip" type="text" pattern="[0-9]*" required maxLength=5>
+            <label for="zip">(This is not stored on our end)</label>
+        </div>
+        
+        <div>
+            <label for="country">Please Select a Country to Look at:</label>
+            <select name="country" id="country" required>
+                <option value="GT">Guatemala</option>
+                <option value="HND">Honduras</option>
+                <option value="SLV">El Salvador</option>
+            </select>
+        </div>
 
-        <label for="country">Please Select a Country to Look at:</label>
-        <select name="country" id="country" required>
-            <option value="GT">Guatemala</option>
-            <option value="HND">Honduras</option>
-            <option value="SLV">El Salvador</option>
-        </select>
-
-        <input type="submit" value="Go">
+        <input class="submit" type="submit" value="Go">
     </form>
     {#if formSubmitted}
         <div class="intro">
             <p>
-                The average monthly income of survey responses from {countryMap[country]} is {(avgIncomeUSD/exchangeRate).toFixed(2)} {currency}, 
-                or {avgIncomeUSD} US dollars per month. 
+                The average monthly income of survey responses from {countryMap[country]} is <b>{(avgIncomeUSD/exchangeRate).toFixed(2)} {currency}</b>, 
+                or <b>{avgIncomeUSD} US Dollars</b> per month. 
             </p>
             <p>
                 This is comparable to living on <b>400 (placeholder)</b> per month in {userZipCodeInfo.city}. How would you budget
                 your monthly allowances with this income?
             </p>
-            <p>
+            <!-- <p>
                 Input either dollar amounts or percentages, and the rest will be automatically converted.
-            </p>
+            </p> -->
         </div>
         <div class="interactive" id="1">
             <h2 class="budget">{remainingBudget} $</h2>
@@ -190,11 +211,11 @@
 
         {#if initialSubmitted}
             <div class="remittances">
-                <p><b>TBD</b>% of immigrants to the United States from {countryMap[country]} send remittances 
+                <p><b>{countryInfo[country].percentRemittances * 100}</b>% of immigrants to the United States from {countryMap[country]} send remittances 
                 back to their home country.</p>
                 <p>
-                    The median amount of remittances sent from survey respondents is $<b>TBD</b> per month, or
-                    <b>convert to local currency</b>
+                    The median amount of remittances sent from survey respondents is <b>{(countryInfo[country].avgRemittancesUSD / exchangeRate).toFixed(2)} {currency}</b> per month, or
+                    <b>{countryInfo[country].avgRemittancesUSD.toFixed(2)} US Dollars</b>
                 </p>
                 <p>
                     This provides a <b>TBD</b>% increase in budget, or $ <b>TBD</b> 
@@ -228,6 +249,9 @@
         gap: 2em;
         min-height:100vh;
         padding-bottom:2em;
+        text-align:center;
+        align-items:center;
+        scroll-behavior: smooth;
     }
     .categories {
         display:flex;
@@ -247,5 +271,42 @@
 
     .interactive .budget {
         margin:0;
+    }
+
+    h2 {
+        font-size:35px;
+    }
+
+    .submit  {
+        font-family: 'Nunito', sans-serif;
+        border: 1px solid black;
+        padding: 2px 2em;
+        border-radius: 1em;
+        background: var(--button-background);
+    }
+
+
+    .submit:hover {
+        filter: brightness(95%);
+    }
+
+    .intro {
+        text-align:left;
+    }
+
+    form {
+        display:flex;
+        flex-direction:column;
+        width: fit-content;
+        align-items:center;
+        justify-content:center;
+    }
+
+    select {
+        font-family: 'Nunito', sans-serif;
+    }
+
+    option {
+        font-family: 'Nunito', sans-serif;
     }
 </style>

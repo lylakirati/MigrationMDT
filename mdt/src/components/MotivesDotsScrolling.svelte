@@ -3,7 +3,7 @@
     import * as d3 from "d3";
     import {onMount} from "svelte";
     import DotGraph from "./DotGraph.svelte";
-    import IncomeSufficiency from "./IncomeSufficiency.svelte"
+    // import IncomeSufficiency from "./IncomeSufficiency.svelte"
 
     let main;
     let scrolly;

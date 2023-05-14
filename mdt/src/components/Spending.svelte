@@ -18,7 +18,7 @@
     
     //begin: layout conf.
     
-    var svgWidth = 720; //850
+    var svgWidth = 840; //850
     var svgHeight = 550; //500
     var margin = {top: 5, right: 5, bottom: 10, left: 5};
     var height = svgHeight - margin.top - margin.bottom;
