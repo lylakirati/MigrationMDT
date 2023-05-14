@@ -10,8 +10,11 @@
 
 <section id="title">
     <h1>What do Central Americans run away from?</h1> 
-    <p class='authors'>By Grace Huang, Lyla Kiratiwudhikul, and Nerine Uyanik</p>
-    <p>(Draft 1.01)</p>
+    <div id="title-description">
+        <p class='authors'>Grace Huang, Lyla Kiratiwudhikul, and Nerine Uyanik</p>
+        <p><a href="https://vis-society.github.io/" target="_blank">Interactive Data Visualization & Society</a></p>
+    </div>
+    
     <!-- <p>
         As a note to reviewers/current viewers, since this is an MVP, there are still things that haven't been finalized yet.
         Particularly, the writing has not been completed yet and we have not finished implementing responsive generation of monetary 
@@ -43,7 +46,7 @@
     <section>
         <RemitScrolling />
     </section>
-    <section>
+    <section class="budget">
         <Budget/>
     </section>
 </main>
@@ -120,10 +123,6 @@
         text-align: left;
     }
 
-    #title .authors {
-        text-align: left;
-    }
-
     #intro {
         padding: 2em 15em;
     }
@@ -134,7 +133,7 @@
     }
     
     .authors {
-        opacity:.85;
+        
     }
 
     :global(.step){
@@ -166,8 +165,23 @@
         display:inline-flex;
 		flex-direction:row;
 		justify-content:center;
+        align-items:center;
 		gap: 1em;
 		padding: 10px;
 	}
+
+    #title-description {
+        text-align:center;
+    }
+    
+    :global(a) {
+        color: #6297D5;
+    }
+
+    :global(a:hover) {
+        color: #9C6BDB;
+        transition: color 0.5s ease;
+        opacity:.85;
+    }
 
 </style>

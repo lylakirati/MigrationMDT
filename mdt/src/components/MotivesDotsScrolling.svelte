@@ -3,7 +3,7 @@
     import * as d3 from "d3";
     import {onMount} from "svelte";
     import DotGraph from "./DotGraph.svelte";
-    import IncomeSufficiency from "./IncomeSufficiency.svelte"
+    // import IncomeSufficiency from "./IncomeSufficiency.svelte"
 
     let main;
     let scrolly;
@@ -13,22 +13,22 @@
 
     let index = 0;
 
-    let figureWidth = 600; // responsive, potentially for the future
+    let figureWidth = 800; // responsive, potentially for the future
     // initialize the scrollama
     let scroller = scrollama();
 
     // generic window resize listener event
     function handleResize() {
         // 1. update height of step elements
-        var stepH = Math.floor(window.innerHeight * 0.75);
+        var stepH = Math.floor(window.innerHeight);
         step.style("height", stepH + "px");
 
         var figureHeight = window.innerHeight - 200;
         var figureMarginTop = (window.innerHeight - figureHeight) / 2;
-
         figure
             .style("height", figureHeight + "px")
-            .style("top", figureMarginTop + "px");
+            .style("top", figureMarginTop + "px")
+            // .style("left", (window.innerWidth - figureWidth)/2 +"px");
 
         // 3. tell scrollama to update new element dimensions
         scroller.resize();
@@ -57,9 +57,6 @@
 		figure = scrolly.select("figure");
 	    article = scrolly.select("article");
     	step = article.selectAll(".step");
-
-        console.log(step);
-
         // 1. force a resize on load to ensure proper dimensions are sent to scrollama
         
         handleResize();
@@ -85,8 +82,8 @@
 
     <section id="scrolly" bind:this={scrolly}>
             
-        <figure class="migration-motives">
-            <DotGraph state={index}/>
+        <figure class="migration-motives" >
+            <DotGraph bind:chartWidth={figureWidth} state={index}/>
             
         </figure>
         
@@ -94,24 +91,20 @@
             <div class="step" data-step="1">
                <p>
                     The World Food Programme surveyed almost 5,000 households from Honduras, Guatemala, and El Salvador,
-                    collecting data about their economic and living situations, as well as their thoughts towards migration.
-                    <!-- We're currently looking at all the survey responses that indicated either a desire to migrate externally 
-                    (to another country) or a desire not to, if given the chance to do so. -->
+                    collecting data about their economic and living situations, as well as their perspectives on migration.
                 </p>
             </div>
             <div class="step" data-step="1">
                 <p>
-                    Each dot represents 5 households that were surveyed.
+                    Each dot represents 1 surveyed household.
                 </p>
              </div>
             <div class="step" data-step="2">
                 <p>
                     When asked about their intention to move abroad, 
                     a large group of them would prefer to stay in their home country, 
-                    citing family separation 
-                    and rootedness as
-                    their primary concerns. But <b>over 43% say they do want to migrate
-                    if given a chance to do so</b>.
+                    citing family separation and rootedness as their primary concerns. 
+                    But <b>over 43% say they do want to migrate if given a chance to do so</b>.
                 </p>
             </div>
             <div class="step" data-step="3">
@@ -145,6 +138,9 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
         /* background-color: #f3f3f3; */
         padding: 1rem;
     }
@@ -162,8 +158,8 @@
     article {
         position: relative;
         padding: 20 5rem;
-        max-width: 50rem;
-        right: 22rem;
+        max-width: 30rem;
+        /* right: 22rem; */
     }
     
     article p {
@@ -175,9 +171,9 @@
     figure {
         position: -webkit-sticky;
         position: sticky;
-        width: 50%;
+        width: 80%;
         height: 80vh;
-        margin-left: 6em;
+        /* margin-left: 6em; */
         -webkit-transform: translate3d(0, 0, 0);
         -moz-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
@@ -185,23 +181,8 @@
         z-index: 0;
     }
 
-    figure p {
-        text-align: center;
-        padding: 1rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        font-size: 8rem;
-        font-weight: 900;
-        /* color: #fff; */
-    }
-
-    figure.is-focused {
-        position: -webkit-sticky;
-        position: sticky;
+    .step:last-child {
+        margin-bottom: 40em;
     }
 
 </style>

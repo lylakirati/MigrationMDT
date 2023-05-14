@@ -21,7 +21,7 @@
 
         console.log("resized");
 
-        let figureHeight = window.innerHeight - 200;
+        let figureHeight = window.innerHeight - 50;
         let figureMarginTop = (window.innerHeight - figureHeight) / 2;
 
         figure2
@@ -111,9 +111,6 @@
 
 
 <style>
-    .income-sufficiency {
-        margin:0;
-    }
 
     #scrolly2 {
         position: relative;
