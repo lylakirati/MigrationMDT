@@ -111,9 +111,6 @@
 
 
 <style>
-    .income-sufficiency {
-        margin:0;
-    }
 
     #scrolly2 {
         position: relative;

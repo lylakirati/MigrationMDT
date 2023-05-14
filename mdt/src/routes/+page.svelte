@@ -174,11 +174,11 @@
         text-align:center;
     }
     
-    a {
+    :global(a) {
         color: #6297D5;
     }
 
-    a:hover {
+    :global(a:hover) {
         color: #9C6BDB;
         transition: color 0.5s ease;
         opacity:.85;

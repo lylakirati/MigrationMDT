@@ -78,12 +78,20 @@
         avgIncomeUSD = countryInfo[country].avgIncomeUSD;
         currency = countryInfo[country].currency;
         exchangeRate = countryInfo[country].exchangeRate;
-        formSubmitted = true;
+        if(userZipCodeInfo === undefined)
+        {
+            alert("Please input a valid zip code");
+        }
+        else {
+            formSubmitted = true;
         window.scrollBy({
             top: 500,
             left:0,
             behavior: 'smooth'
         });
+        }
+        
+
 	}
 
     $: multiplier = 1;
@@ -294,6 +302,9 @@
         text-align:left;
     }
 
+    .remittances {
+        text-align:left;
+    }
     form {
         display:flex;
         flex-direction:column;
@@ -309,4 +320,5 @@
     option {
         font-family: 'Nunito', sans-serif;
     }
+    
 </style>

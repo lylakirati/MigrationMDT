@@ -91,24 +91,20 @@
             <div class="step" data-step="1">
                <p>
                     The World Food Programme surveyed almost 5,000 households from Honduras, Guatemala, and El Salvador,
-                    collecting data about their economic and living situations, as well as their thoughts towards migration.
-                    <!-- We're currently looking at all the survey responses that indicated either a desire to migrate externally 
-                    (to another country) or a desire not to, if given the chance to do so. -->
+                    collecting data about their economic and living situations, as well as their perspectives on migration.
                 </p>
             </div>
             <div class="step" data-step="1">
                 <p>
-                    Each dot represents 5 households that were surveyed.
+                    Each dot represents 1 surveyed household.
                 </p>
              </div>
             <div class="step" data-step="2">
                 <p>
                     When asked about their intention to move abroad, 
                     a large group of them would prefer to stay in their home country, 
-                    citing family separation 
-                    and rootedness as
-                    their primary concerns. But <b>over 43% say they do want to migrate
-                    if given a chance to do so</b>.
+                    citing family separation and rootedness as their primary concerns. 
+                    But <b>over 43% say they do want to migrate if given a chance to do so</b>.
                 </p>
             </div>
             <div class="step" data-step="3">
@@ -183,25 +179,6 @@
         transform: translate3d(0, 0, 0);
         /* background-color: #8a8a8a; */
         z-index: 0;
-    }
-
-    figure p {
-        text-align: center;
-        padding: 1rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        font-size: 8rem;
-        font-weight: 900;
-        /* color: #fff; */
-    }
-
-    figure.is-focused {
-        position: -webkit-sticky;
-        position: sticky;
     }
 
     .step:last-child {

@@ -1,12 +1,12 @@
 <section id="footer">
     <div>
-        <h3>Data References</h3>
+        This data visualization was made with data contributed by the United Nations World Food Programme (WFP).
+        <h3>Other Data References</h3>
         <ul>
-            <li>World Food Programme Survey of Central American Migration (2021)</li>
-            <li>Zip Code Data: https://simplemaps.com/data/us-zips</li>
+            <li>Zip Code Data: <a href="https://simplemaps.com/data/us-zips" target="_blank">https://simplemaps.com/data/us-zips</a></li>
         </ul>
         
-
+        Made for MIT's <a href="https://vis-society.github.io/" target="_blank">Interactive Data Visualization & Society Course</a>, Spring 2023
     </div>
 </section>
 
