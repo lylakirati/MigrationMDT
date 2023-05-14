@@ -162,18 +162,18 @@
    
 </script>
 <main>
-    <h2>How would your spending be affected by remittances?</h2>
+    <h2>Try out what the Central Americans' living would be like in where you are</h2>
     {#if loaded}
     <form on:submit|preventDefault={handleSubmit}>
         <!-- <input id="country" name="country" type="text"> -->
         <div>
-            <label for="zip">Please Input Your Zip Code:</label>
+            <label for="zip">Please input your zip code:</label>
             <input id="zip" name="zip" type="text" pattern="[0-9]*" required maxLength=5>
-            <label for="zip">(This is not stored on our end)</label>
+            <label for="zip">(Your result will not be stored.)</label>
         </div>
         
         <div>
-            <label for="country">Please Select a Country to Look at:</label>
+            <label for="country">Select a country to look at:</label>
             <select name="country" id="country" required>
                 <option value="GT">Guatemala</option>
                 <option value="HND">Honduras</option>
@@ -219,8 +219,10 @@
 
         {#if initialSubmitted}
             <div class="remittances">
-                <p><b>{countryInfo[country].percentRemittances * 100}</b>% of immigrants to the United States from {countryMap[country]} send remittances 
-                back to their home country.</p>
+                <p>
+                    <b>{countryInfo[country].percentRemittances * 100}%</b> of immigrants to the United States from {countryMap[country]} send remittances 
+                    back to their home country.
+                </p>
                 <p>
                     The median amount of remittances sent from survey respondents is <b>{(countryInfo[country].avgRemittancesUSD / exchangeRate).toFixed(2)} {currency}</b> per month, or
                     <b>{countryInfo[country].avgRemittancesUSD.toFixed(2)} US Dollars</b>
@@ -230,7 +232,7 @@
                     to live in your city, {userZipCodeInfo.city}.
                 </p>
                 <p>
-                    How would you change your spending with this additional budget?
+                    How would you change your spending with the extra money?
                 </p>
             </div>
             <div class="interactive" id="2">
@@ -283,6 +285,7 @@
 
     h2 {
         font-size:35px;
+        padding: 0 2em;
     }
 
     .submit  {
@@ -300,11 +303,14 @@
 
     .intro {
         text-align:left;
+        padding: 2em 10em;
     }
 
     .remittances {
         text-align:left;
+        padding: 2em 10em;
     }
+
     form {
         display:flex;
         flex-direction:column;

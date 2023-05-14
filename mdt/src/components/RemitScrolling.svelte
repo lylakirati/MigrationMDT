@@ -105,8 +105,8 @@
         </div>
         <div class="step" data-step="2">
             <p>
-                This is what the average monthly expenditure of households who receive financial support
-                from abroad looks like. They spend approximately US$205 per month. 
+                This is what the <b>average monthly expenditure of households who receive financial support
+                from abroad</b> looks like. They spend approximately US$205 per month. 
             </p>
         </div>
         <div class="step" data-step="3">

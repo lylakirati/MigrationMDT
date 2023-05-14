@@ -43,11 +43,6 @@
     <section>
         <IncomeSufficiencyScrolling />
     </section>
-    <!-- <section class = "paragraph-text">
-        <p>
-            Migrating to find a job in another country can allow Central Americans to earn higher wage and send money home to aid their families.
-        </p>
-    </section> -->
     <section>
         <RemitScrolling />
     </section>
@@ -131,10 +126,6 @@
     #intro {
         padding: 2em 15em;
     }
-
-    /* .paragraph-text {
-        padding: 2em 15em;
-    } */
 
     h1 {
         font-weight: 700;

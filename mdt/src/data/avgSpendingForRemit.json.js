@@ -137,7 +137,7 @@ export let remitExp = {
         },
         {
             "name": "Education",
-            "color": "#1C52A3",
+            "color": "#7d9dcc",
             "children": [
                 {
                     "name": "Education", 
