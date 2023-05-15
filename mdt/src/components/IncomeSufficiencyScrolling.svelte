@@ -90,12 +90,15 @@
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                Roughly <b>35%</b> of the Central Americans <b>barely have enough money to feed their families</b>.
+                Among all of the households surveyed, most reported <b>periodically or persistently lacking the money</b>
+                necessary to secure food and other basic living expenses.
+                Toggle between the different buttons to see breakdowns of income insufficiency by country.
             </p>
         </div>
         <div class="step" data-step="2">
             <p>
-                Migrating to find a job in another country can allow Central Americans to earn higher wage and send money home to aid their families.
+                Without sufficient income to support the cost of living at home, 
+                people have <b>no choice</b> but <b>to leave and to find work elsewhere</b>.
             </p>
         </div>
         <!-- <div class="step" data-step="3">

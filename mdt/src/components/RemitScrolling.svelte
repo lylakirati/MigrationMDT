@@ -19,7 +19,7 @@
     // generic window resize listener event
     function handleResize3() {
         // 1. update height of step elements
-        let stepH = Math.floor(window.innerHeight * 0.99);
+        let stepH = Math.floor(window.innerHeight * 0.75);
         step3.style("height", stepH + "px");
 
         console.log("resized");
@@ -96,7 +96,7 @@
     <article class="income-sufficiency-text">
         <div class="step" data-step="1">
             <p>
-                <b>Twelve percent</b>
+                <b>Twelve%</b>
                 of the households indicate that they <b>receive financial support from abroad at least once a month</b>.
             </p>
             <p>
@@ -111,21 +111,22 @@
         </div>
         <div class="step" data-step="3">
             <p>
-                Unlike the U.S. where housing is relatively expensive, <b>over 35%</b> of Central American households'
-                monthly expenditure is <b>for securing food and drinking water</b>.
+                Housing costs in the Central American countries are less expensive than in the U.S., but 
+               <b>food and drinking water</b> cost more, comprising <b>over 35%</b> of Central American households’ monthly expenditure.
             </p>
         </div>
         <div class="step" data-step="4">
             <p>
-                Compare these numbers to the spendings of households who have <b>no financial support from abroad</b>.
-                Their spendings in every category drop up to 70%. In particular, <b>they have much less to spend on
-                food, healthcare, and housing</b>. 
+                Households who receive no financial support from abroad reported <b>spending less 
+                across all categories</b> of monthly expenditures. To afford the more fixed expenses such as 
+                rent and transportation, households make <b>greater cuts to spending on food and healthcare</b>.
             </p>
         </div>
         <div class="step" data-step="5">
             <p>
-                While the amount of remittances that households receive vary by country and by situation, having 
-                remittances from abroad as an additional source of income can play a large role in supporting households.
+                While the amount of remittances received vary by country and by individual households, 
+                the <b>additional source of income</b> plays a substantial role in improving the livelihoods of 
+                families that receive them.
             </p>
         </div>
         <!-- <div class="step" data-step="3">

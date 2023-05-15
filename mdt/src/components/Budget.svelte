@@ -15,6 +15,10 @@
     let country = "";
     let avgIncomeUSD, currency, exchangeRate;
     let zipCodeData = {};
+    let incomeDataMap = {};
+    let incomeZipCodeArray = [];
+    let convertedIncome;
+    let remitMultiplier;
 
     let countryMap = {
 		SLV: 'El Salvador',
@@ -25,34 +29,62 @@
     let countryInfo = {
         GT: {
             avgIncomeUSD: 42.97,
+            avgNoRemitUSD: 35.65,
+            avgWithRemitUSD: 69.36,
             currency: "Quetzals",
             exchangeRate: 0.13,
             percentRemittances: 0.217,
-            avgRemittancesUSD: 148.426457
+            avgRemittancesUSD: 123.052097,
+            countryIncomeUSD: 411.66, 
+            remitMultiplier: 69.36 / 35.65,
         },
         HND: {
             avgIncomeUSD: 17.21,
+            avgNoRemitUSD: 10.58,
+            avgWithRemitUSD: 32.17,
             currency: "Lempira",
             exchangeRate: 0.041,
             percentRemittances: 0.289,
-            avgRemittancesUSD: 121.233210
+            avgRemittancesUSD: 81.108036,
+            countryIncomeUSD: 207.50, 
+            remitMultiplier: 32.17 / 10.58
         },
         SLV: {
             avgIncomeUSD: 276.61,
-            currency: "Dollars",
+            avgNoRemitUSD: 257.04,
+            avgWithRemitUSD: 310.00,
+            currency: "US Dollars",
             exchangeRate: 1,
             percentRemittances: 0.363,
-            avgRemittancesUSD: 124.732433
+            avgRemittancesUSD: 147.673111,
+            countryIncomeUSD: 355.00, 
+            remitMultiplier: 310.00 / 257.04
         }
     };
 
+    // Scale survey income using median income from selected country and median income from target zip code
+    // Country: Either 'GT', 'HND', or 'SLV'
+    // Zip Code: 5-digit number format
+    function convertIncome(country, zipCode) {
+        let zipCodeIncome = incomeDataMap[zipCode]?.med_income_monthly
+        if(zipCodeIncome === undefined) {
+            return undefined; // zip code not in system
+        }
+        const scaleFactor = zipCodeIncome/countryInfo[country].countryIncomeUSD;
+        return countryInfo[country].avgNoRemitUSD * scaleFactor;
+    }
+
     onMount(async () => {
 		let data = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/mdt/src/data/uszips.csv"); 
+        let incomeData = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/data/med_income_data.csv");
 
 		for (let d of data) {
-			zipCodeData[d.zip] = d; // create map
+			zipCodeData[d.zip] = {zip: d.zip, city: d.city}; // create map
 		}
-
+        for (let d of incomeData)
+        {
+            incomeDataMap[d.zip_code] = {zip: d.zip_code, med_income_monthly: d.med_income_12m !== '-' ? d.med_income_12m / 12 : undefined};
+        }
         loaded = true;
 	});
 
@@ -75,20 +107,27 @@
 		}
         // console.log(userZipCode);
         userZipCodeInfo = zipCodeData[userZipCode]; // TODO: assumes valid zip code for now, fix later
-        avgIncomeUSD = countryInfo[country].avgIncomeUSD;
+        avgIncomeUSD = countryInfo[country].avgNoRemitUSD;
         currency = countryInfo[country].currency;
         exchangeRate = countryInfo[country].exchangeRate;
+        remitMultiplier = countryInfo[country].remitMultiplier;
         if(userZipCodeInfo === undefined)
         {
             alert("Please input a valid zip code");
         }
         else {
-            formSubmitted = true;
-        window.scrollBy({
-            top: 500,
-            left:0,
-            behavior: 'smooth'
-        });
+            convertedIncome = convertIncome(country, userZipCode); 
+            if(convertedIncome === undefined) {
+                alert("Sorry, this zip code is currently not in our income system. Please input another zip code.");
+            }
+            else {
+                formSubmitted = true;
+                window.scrollBy({
+                    top: 500,
+                    left:0,
+                    behavior: 'smooth'
+                });
+            }
         }
         
 
@@ -96,7 +135,7 @@
 
     $: multiplier = 1;
     
-    $: budgetAllowance = Math.floor(400 * multiplier); // calculate this logic later
+    $: budgetAllowance = Math.round((convertedIncome ?? 0) * multiplier); // calculate this logic later
     let allocation = {
         food: 0,
         housing: 0,
@@ -105,7 +144,6 @@
         transportation: 0,
         education: 0,
         // not implemented for now:
-        
         // hygieneHousehold: 0,
         // miscExpenses: 0,
         // healthCareMedical: 0,
@@ -119,20 +157,21 @@
     }
     $: remainingBudget = budgetAllowance - Object.keys(allocation).reduce((sum, key) => allocation[key] + sum, 0)
 
-    $: budgetAllowanceWithRemit = Math.floor(600 * multiplier); // calculate this logic later
+    $: budgetAllowanceWithRemit = Math.round((convertedIncome ?? 0) * (1 + remitMultiplier) * multiplier); // calculate this logic later
     let allocationWithRemit = {
         food: 0,
         housing: 0,
         utilities: 0, 
-        communication: 0
+        communication: 0,
+        transportation: 0,
+        education: 0,
         // not implemented for now:
-        // communication: 0,
-        // transportation: 0,
+       
         // hygieneHousehold: 0,
         // miscExpenses: 0,
         // healthCareMedical: 0,
         // clothesShoes: 0,
-        // education: 0,
+        // 
         // debt: 0,
         // socialEvents: 0,
         // productiveSupplies: 0,
@@ -153,7 +192,7 @@
     function submitInitial() {
         initialSubmitted = true;
         window.scrollBy({
-            top: 400,
+            top: 150,
             left:0,
             behavior: 'smooth'
         })
@@ -169,15 +208,15 @@
         <div>
             <label for="zip">Please input your zip code:</label>
             <input id="zip" name="zip" type="text" pattern="[0-9]*" required maxLength=5>
-            <label for="zip">(Your result will not be stored.)</label>
+            <label for="zip">(Your result will not be stored)</label>
         </div>
         
         <div>
             <label for="country">Select a country to look at:</label>
             <select name="country" id="country" required>
+                <option value="SLV">El Salvador</option>
                 <option value="GT">Guatemala</option>
                 <option value="HND">Honduras</option>
-                <option value="SLV">El Salvador</option>
             </select>
         </div>
 
@@ -186,11 +225,13 @@
     {#if formSubmitted}
         <div class="intro">
             <p>
-                The average monthly income of survey responses from {countryMap[country]} is <b>{(avgIncomeUSD/exchangeRate).toFixed(2)} {currency}</b>, 
-                or <b>{avgIncomeUSD} US Dollars</b> per month. 
+                The average monthly income of survey responses from {countryMap[country]} that do not receive remittances
+                is <b>{(avgIncomeUSD/exchangeRate).toFixed(2)} {currency}</b>{#if country !== 'SLV'}
+                    , or <b>${avgIncomeUSD.toFixed(2)} US Dollars</b> per month
+                {/if}.
             </p>
             <p>
-                This is comparable to living on <b>400 (placeholder)</b> per month in {userZipCodeInfo.city}. How would you budget
+                This is comparable to living on <b>${convertedIncome.toFixed(2)}</b> per month in {userZipCodeInfo.city}. How would you budget
                 your monthly allowances with this income?
             </p>
             <!-- <p>
@@ -198,7 +239,7 @@
             </p> -->
         </div>
         <div class="interactive" id="1">
-            <h2 class="budget">{remainingBudget} $</h2>
+            <h2 class="budget">$ {remainingBudget}</h2>
             <div class="options">
                 <button on:click={resetAmounts}>Reset All Values</button>
                 {#if initialSubmitted}
@@ -211,6 +252,8 @@
                 <Category title={"HOUSING"} bind:dollars={allocation.housing} bind:maxValue={budgetAllowance}/>
                 <Category title={"UTILITIES"} bind:dollars={allocation.utilities} bind:maxValue={budgetAllowance}/>
                 <Category title={"COMMUNICATIONS"} bind:dollars={allocation.communication} bind:maxValue={budgetAllowance}/>
+                <Category title={"TRANSPORTATION"} bind:dollars={allocation.transportation} bind:maxValue={budgetAllowance}/>
+                <Category title={"EDUCATION"} bind:dollars={allocation.education} bind:maxValue={budgetAllowance}/>
             </div>
             {#if !initialSubmitted}
                 <button on:click={submitInitial}>I'm done</button>
@@ -224,11 +267,12 @@
                     back to their home country.
                 </p>
                 <p>
-                    The median amount of remittances sent from survey respondents is <b>{(countryInfo[country].avgRemittancesUSD / exchangeRate).toFixed(2)} {currency}</b> per month, or
-                    <b>{countryInfo[country].avgRemittancesUSD.toFixed(2)} US Dollars</b>
+                    The average amount of remittances sent from survey respondents per shipment is <b>{(countryInfo[country].avgRemittancesUSD / exchangeRate).toFixed(2)} {currency}</b>{#if country !== 'SLV'}
+                    , or <b>${countryInfo[country].avgRemittancesUSD.toFixed(2)} US Dollars</b> per month
+                {/if}. 
                 </p>
                 <p>
-                    This provides a <b>TBD</b>% increase in budget, or $ <b>TBD</b> 
+                    This provides approximately a <b>{(remitMultiplier * 100).toFixed(2)}</b>% increase in monthly income, or <b>${budgetAllowanceWithRemit}</b> 
                     to live in your city, {userZipCodeInfo.city}.
                 </p>
                 <p>
@@ -236,13 +280,15 @@
                 </p>
             </div>
             <div class="interactive" id="2">
-                <h2 class="budget">{remainingBudgetWithRemit} $</h2>
+                <h2 class="budget">$ {remainingBudgetWithRemit}</h2>
                 <button on:click={resetAmountsWithRemit}>Reset</button>
                 <div class="categories">
                     <Category title={"FOOD"} bind:dollars={allocationWithRemit.food} bind:maxValue={budgetAllowanceWithRemit}/>
                     <Category title={"HOUSING"} bind:dollars={allocationWithRemit.housing} bind:maxValue={budgetAllowanceWithRemit}/>
                     <Category title={"UTILITIES"} bind:dollars={allocationWithRemit.utilities} bind:maxValue={budgetAllowanceWithRemit}/>
                     <Category title={"COMMUNICATIONS"} bind:dollars={allocationWithRemit.communication} bind:maxValue={budgetAllowanceWithRemit}/>
+                    <Category title={"TRANSPORTATION"} bind:dollars={allocationWithRemit.transportation} bind:maxValue={budgetAllowanceWithRemit}/>
+                    <Category title={"EDUCATION"} bind:dollars={allocationWithRemit.education} bind:maxValue={budgetAllowanceWithRemit}/>
                 </div>
             </div>
         {/if}
@@ -264,11 +310,13 @@
         scroll-behavior: smooth;
     }
     .categories {
+        
         display:flex;
-        flex-direction:row-wrap;
+        flex-direction:row;
+        flex-wrap:wrap;
         align-items:space-between;
         justify-content:center;
-        gap:2em;
+        gap:3em;
     }
 
     .interactive {

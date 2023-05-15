@@ -9,7 +9,8 @@
 </script>
 
 <section id="title">
-    <h1>What do Central Americans run away from?</h1> 
+    <h1 id="big-title">Poverty and Possibility</h1> 
+    <h2 id="sub-title">Economic motivations of Central American migration to the US</h2>
     <div id="title-description">
         <p class='authors'>Grace Huang, Lyla Kiratiwudhikul, and Nerine Uyanik</p>
         <p><a href="https://vis-society.github.io/" target="_blank">Interactive Data Visualization & Society</a></p>
@@ -61,7 +62,7 @@
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p> -->
 
 <style>
-    
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans');
     @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap");
     :global(body) {
         margin:0;
@@ -122,11 +123,6 @@
 
     }
 
-    #title h1 {
-        /* margin:0 10em; */
-        font-size: 50px;
-        text-align: left;
-    }
 
     #intro {
         padding: 2em 15em;
@@ -137,6 +133,20 @@
         font-size: 70px;
     }
     
+    #big-title {
+        margin-bottom:0em;
+        text-align:left;
+        font-size:60px;
+    }
+
+    #sub-title {
+        font-size:25px;
+        margin-top:0em;
+        padding-bottom:1em;
+        font-weight:700;
+        color:#CCF3FF;
+        /* font-family: "Open Sans", sans-serif; */
+    }
     .authors {
         
     }
@@ -188,5 +198,9 @@
         transition: color 0.5s ease;
         opacity:.85;
     }
+
+   main section {
+    padding-bottom:2em;
+   }
 
 </style>

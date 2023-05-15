@@ -101,14 +101,13 @@
              </div>
             <div class="step" data-step="2">
                 <p>
-                    When asked about their intention to move abroad, 
-                    a large group of them would prefer to stay in their home country, 
-                    citing family separation and rootedness as their primary concerns. 
-                    But <b>over 43% say they do want to migrate if given a chance to do so</b>.
+                    When asked about their intention to move abroad, a large group of them responded 
+                    preferring to stay in their home country, citing family separation and rootedness 
+                    as main factors. However, <b>over 43% say they do want to migrate if given a chance to do so</b>.
                 </p>
             </div>
-            <div class="step" data-step="3">
-                <p>So what drives these Central Americans to migrate?</p>
+            <div class="step" data-step="3" id="special">
+                <p><b>So what drives these Central Americans to migrate?</b></p>
             </div>
             <div class="step" data-step="4">
                 <p>
@@ -182,7 +181,11 @@
     }
 
     .step:last-child {
-        margin-bottom: 40em;
+        margin-bottom: 20em;
+    }
+
+    #special {
+        text-align:center;
     }
 
 </style>
