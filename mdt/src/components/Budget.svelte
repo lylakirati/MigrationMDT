@@ -28,21 +28,21 @@
             currency: "Quetzals",
             exchangeRate: 0.13,
             percentRemittances: 0.217,
-            avgRemittancesUSD: 32.980706
+            avgRemittancesUSD: 148.426457
         },
         HND: {
             avgIncomeUSD: 17.21,
             currency: "Lempira",
             exchangeRate: 0.041,
             percentRemittances: 0.289,
-            avgRemittancesUSD: 22.508679
+            avgRemittancesUSD: 121.233210
         },
         SLV: {
             avgIncomeUSD: 276.61,
             currency: "Dollars",
             exchangeRate: 1,
             percentRemittances: 0.363,
-            avgRemittancesUSD: 51.674749
+            avgRemittancesUSD: 124.732433
         }
     };
 
@@ -162,7 +162,7 @@
    
 </script>
 <main>
-    <h2>Try out what the Central Americans' living would be like in where you are</h2>
+    <h2>How could remittances affect your spending?</h2>
     {#if loaded}
     <form on:submit|preventDefault={handleSubmit}>
         <!-- <input id="country" name="country" type="text"> -->

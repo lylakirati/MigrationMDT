@@ -179,7 +179,7 @@
         </button> -->
     </label>
 
-    <h2 class="title">Average monthly expenditure of households who {showNoRemitStatus == 0 ? "receive remittance support" : "do not have remittance support"}</h2>
+    <h2 class="title">Average monthly expenditure of households who <b>{showNoRemitStatus == 0 ? "receive remittance support" : "do not receive remittance support"}</b></h2>
     
     <svg 
         width={svgWidth} 
@@ -455,5 +455,9 @@
     .legend-color {
         stroke-width: 1px;
         stroke:darkgrey;
+    }
+
+    b {
+        color: #B990EC;
     }
 </style>

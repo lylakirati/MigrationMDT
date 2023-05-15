@@ -26,13 +26,19 @@
 <main>
     <section id="intro" class = "paragraph-text">
         <p>
-            More than 3.8 million people from Central America have migrated to and lived in the United States as of 2019. <a href="https://www.migrationpolicy.org/article/central-american-immigrants-united-states#:~:text=The%20Central%20American%20diaspora%20is,with%20Honduran%20ancestry%20or%20origin">[1]</a>
-            Immigrants from the Northern Triangle countries (El Salvador, Guatemala, and Honduras) take up over 86% of the number. 
-            Still, these numbers do not include immigrants from irregular channels or people who were stopped at the U.S-Mexico border and deported. 
+            Since 1980, more than 3.8 million people have migrated from Central America to live in the United States, 
+            and over 86% of them were born in one of the Northern Triangle countries (El Salvador, Guatemala, and Honduras) 
+            <a href="https://www.migrationpolicy.org/article/central-american-immigrants-united-states#:~:text=The%20Central%20American%20diaspora%20is,with%20Honduran%20ancestry%20or%20origin">[1]</a>.
+            As of 2019, an additional estimated 2.1 million irregular (unauthorized) immigrants from Central American countries 
+            reside in the United States, with approximately 1.96 million from the Northern Triangle Countries. These numbers represent 
+            only the fraction of completed migrations among all immigration attempts, many of them unsuccessful. 
+
         </p>
+    
         <p>
-            People from these three countries embark on a hope-filled journey to find a better life for themselves or for the families they leave behind. 
-            However, the routes they take are often dangerous and life-threatening, from ​​treacherous terrain to violence such as robbery and sexual assault. 
+            Central American migrants embark on the treacherous journey in the hopes of securing a better life for themselves or 
+            for the families they leave behind. However, the routes they take are filled with danger and uncertainty, 
+            from crossing ​​treacherous terrain to facing violence such as robbery and sexual assault. 
         </p>
 
         <b>So what has driven them to leave their home countries and risk the perilous passage to the U.S.? </b>
