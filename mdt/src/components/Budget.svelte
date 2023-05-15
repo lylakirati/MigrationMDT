@@ -37,6 +37,7 @@
             avgRemittancesUSD: 123.052097,
             countryIncomeUSD: 411.66, 
             remitMultiplier: 69.36 / 35.65,
+            clIndex: 40.2
         },
         HND: {
             avgIncomeUSD: 17.21,
@@ -47,7 +48,8 @@
             percentRemittances: 0.289,
             avgRemittancesUSD: 81.108036,
             countryIncomeUSD: 207.50, 
-            remitMultiplier: 32.17 / 10.58
+            remitMultiplier: 32.17 / 10.58,
+            clIndex: 38.8
         },
         SLV: {
             avgIncomeUSD: 276.61,
@@ -58,7 +60,8 @@
             percentRemittances: 0.363,
             avgRemittancesUSD: 147.673111,
             countryIncomeUSD: 355.00, 
-            remitMultiplier: 310.00 / 257.04
+            remitMultiplier: 310.00 / 257.04,
+            clIndex: 43.3
         }
     };
 
@@ -70,7 +73,10 @@
         if(zipCodeIncome === undefined) {
             return undefined; // zip code not in system
         }
-        const scaleFactor = zipCodeIncome/countryInfo[country].countryIncomeUSD;
+        // const scaleFactor = zipCodeIncome/countryInfo[country].countryIncomeUSD;
+        // US = 72.4, SAL = 43.3, GT = 40.2, HND = 38.8	
+        const scaleFactor = 72.4 / countryInfo[country].clIndex;
+
         return countryInfo[country].avgNoRemitUSD * scaleFactor;
     }
 
