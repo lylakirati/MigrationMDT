@@ -279,7 +279,7 @@
                 </p>
                 <p>
                     This provides approximately a <b>{(remitMultiplier * 100).toFixed(2)}</b>% increase in monthly income, or <b>${budgetAllowanceWithRemit}</b> 
-                    to live in your city, {userZipCodeInfo.city}.
+                    to live in your state, {userZipCodeInfo.state}.
                 </p>
                 <p>
                     How would you change your spending with the extra money?
