@@ -85,7 +85,7 @@
         let incomeData = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/data/med_income_data.csv");
 
 		for (let d of data) {
-			zipCodeData[d.zip] = {zip: d.zip, city: d.city}; // create map
+			zipCodeData[d.zip] = {zip: d.zip, city: d.city, state: d.state_name}; // create map
 		}
         for (let d of incomeData)
         {
@@ -237,7 +237,7 @@
                 {/if}.
             </p>
             <p>
-                This is comparable to living on <b>${convertedIncome.toFixed(2)}</b> per month in {userZipCodeInfo.city}. How would you budget
+                This is comparable to living on <b>${convertedIncome.toFixed(2)}</b> per month in {userZipCodeInfo.state}. How would you budget
                 your monthly allowances with this income?
             </p>
             <!-- <p>
