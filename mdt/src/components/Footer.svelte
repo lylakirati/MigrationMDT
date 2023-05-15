@@ -4,7 +4,8 @@
 
         <p>
             This data visualization was made with data contributed by the United Nations World Food Programme (WFP).
-            The zip code data is from <a href="https://simplemaps.com/data/us-zips" target="_blank">SimpleMaps</a>.
+            The zip code data is from <a href="https://simplemaps.com/data/us-zips" target="_blank">SimpleMaps</a>, the country-level Cost of Living Index data is from <a href="https://www.numbeo.com/cost-of-living/rankings_by_country.jsp" target="_blank">NUMBEO/a>, and the US state-level Cost of Living Index is from 
+            <a href="https://meric.mo.gov/data/cost-living-data-series" target="_blank">Missouri Economic Research and Information Center/a>.
             Partial code for the monthly spending treemap visualization was adapted from <a href="https://gist.github.com/Kcnarf/fa95aa7b076f537c00aed614c29bb568" target="_blank">Kcnarf's illustration</a>.
         </p>
         <!-- <ul>
