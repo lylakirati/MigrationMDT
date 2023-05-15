@@ -16,6 +16,7 @@
     let avgIncomeUSD, currency, exchangeRate;
     let zipCodeData = {};
     let incomeDataMap = {};
+    let cliDataMap = {};
     let incomeZipCodeArray = [];
     let convertedIncome;
     let remitMultiplier;
@@ -75,7 +76,8 @@
         }
         // const scaleFactor = zipCodeIncome/countryInfo[country].countryIncomeUSD;
         // US = 72.4, SAL = 43.3, GT = 40.2, HND = 38.8	
-        const scaleFactor = 72.4 / countryInfo[country].clIndex;
+        // console.log(cliDataMap);
+        const scaleFactor = 72.4 * +cliDataMap[zipCodeData[zipCode].state].cli / (countryInfo[country].clIndex * 100) ;
 
         return countryInfo[country].avgNoRemitUSD * scaleFactor;
     }
@@ -83,6 +85,7 @@
     onMount(async () => {
 		let data = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/mdt/src/data/uszips.csv"); 
         let incomeData = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/data/med_income_data.csv");
+        let cliData = await d3.csv("https://raw.githubusercontent.com/lylakirati/MigrationMDT/main/data/cli_by_state.csv");
 
 		for (let d of data) {
 			zipCodeData[d.zip] = {zip: d.zip, city: d.city, state: d.state_name}; // create map
@@ -90,6 +93,10 @@
         for (let d of incomeData)
         {
             incomeDataMap[d.zip_code] = {zip: d.zip_code, med_income_monthly: d.med_income_12m !== '-' ? d.med_income_12m / 12 : undefined};
+        }
+        for( let d of cliData)
+        {
+            cliDataMap[d.state] = {state: d.state, cli: d.index};
         }
         loaded = true;
 	});
