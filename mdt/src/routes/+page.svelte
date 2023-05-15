@@ -32,7 +32,6 @@
             As of 2019, an additional estimated 2.1 million irregular (unauthorized) immigrants from Central American countries 
             reside in the United States, with approximately 1.96 million from the Northern Triangle Countries. These numbers represent 
             only the fraction of completed migrations among all immigration attempts, many of them unsuccessful. 
-
         </p>
     
         <p>
